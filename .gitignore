@@ -2,3 +2,5 @@
 .tandoor.env
 home-assistant/secrets.yaml
 yarr/
+.terraform
+.terraform.lock.hcl

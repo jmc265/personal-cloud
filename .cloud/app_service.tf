@@ -18,6 +18,11 @@ resource "azurerm_linux_web_app" "uptime_kuma" {
     always_on = true
     application_stack {
       docker_image = "registry.hub.docker.com/louislam/uptime-kuma"
+      docker_image_tag = "latest"
     }
   }
+}
+
+output "uptime_kuma_hostname" {
+  value = azurerm_linux_web_app.uptime_kuma.default_hostname
 }
