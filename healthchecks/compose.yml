@@ -1,0 +1,21 @@
+version: "3.4"
+
+services:
+  healthchecks:
+    image: linuxserver/healthchecks
+    container_name: healthchecks
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - SITE_ROOT=http://${LOCAL_DOMAIN}:9320
+      - SITE_NAME=Health Checks
+      - SUPERUSER_EMAIL=${ADMIN_EMAIL}
+      - SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
+      - APPRISE_ENABLED=True
+      - DEBUG=False
+    volumes:
+      - ${DOCKER_APP_DATA}/healthchecks:/config
+    ports:
+      - 9320:8000
+    restart: unless-stopped

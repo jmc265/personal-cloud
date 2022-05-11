@@ -1,0 +1,4 @@
+.env
+.tandoor.env
+home-assistant/secrets.yaml
+yarr/

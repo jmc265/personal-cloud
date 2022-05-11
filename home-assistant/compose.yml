@@ -1,0 +1,19 @@
+version: "3.4"
+
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    cap_add:
+      - net_admin
+      - net_raw
+      - NET_ADMIN
+      - SYS_ADMIN
+    volumes:
+      - ${DOCKER_APP_DATA}/homeassistant:/config
+      - ${SECONDARY_STORAGE}:/mnt/ext:z
+      - ${PRIMARY_STORAGE}:/mnt/ext2:z
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host

@@ -1,0 +1,14 @@
+version: "3.4"
+
+services:
+  node-red:
+    container_name: node-red
+    image: nodered/node-red:latest
+    environment:
+      - TZ=${TZ}
+    ports:
+      - "1880:1880"
+    volumes:
+      - ${DOCKER_APP_DATA}/node-red:/data
+      - ${HOME_SERVER_DIR}/home-tracker:/home-tracker:z
+    restart: unless-stopped

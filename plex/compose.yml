@@ -1,0 +1,23 @@
+version: "3.4"
+
+services:
+  plex:
+    image: linuxserver/plex
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - VERSION=docker
+    volumes:
+      - ${DOCKER_APP_DATA}/plex:/config
+      - ${PRIMARY_STORAGE}/downloads/media/tv:/tv
+      - ${PRIMARY_STORAGE}/downloads/media/movies:/movies
+      - ${PRIMARY_STORAGE}/downloads/media/music:/music
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.plex.rule=Host(`media.${INET_DOMAIN}`)
+      - traefik.http.routers.plex.tls=true
+      - traefik.http.routers.plex.tls.certresolver=letsencrypt
+      - traefik.http.services.plex.loadbalancer.server.port=32400

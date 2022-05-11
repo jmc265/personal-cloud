@@ -1,0 +1,13 @@
+version: "3.4"
+
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:v2.5
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ${HOME_SERVER_DIR}/traefik/traefik.yml:/etc/traefik/traefik.yml
+      - ${HOME_SERVER_DIR}/traefik/homeassistant.traefik.yml:/etc/traefik/homeassistant.traefik.yml
+      - ${DOCKER_APP_DATA}/traefik/letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock

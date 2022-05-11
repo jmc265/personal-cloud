@@ -1,0 +1,17 @@
+version: "3.4"
+
+services:
+  heimdall:
+    container_name: heimdall
+    image: lscr.io/linuxserver/heimdall:latest
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_APP_DATA}/heimdall/config:/config
+    ports:
+      - 3029:80
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

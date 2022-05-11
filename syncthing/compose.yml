@@ -1,0 +1,27 @@
+version: "3.4"
+
+services:
+  syncthing:
+    container_name: syncthing
+    image: linuxserver/syncthing
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    ports:
+      - 8384:8384
+      - 22000:22000
+      - 21027:21027/udp
+    volumes:
+      - ${DOCKER_APP_DATA}/syncthing:/config
+      - ${SECONDARY_STORAGE}:/mnt/ext:z
+      - ${PRIMARY_STORAGE}:/mnt/ext2:z
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.syncthing.entrypoints=websecure
+      - traefik.http.routers.syncthing.rule=Host(`sync.${INET_DOMAIN}`)
+      - traefik.http.routers.syncthing.tls=true
+      - traefik.http.routers.syncthing.tls.certresolver=letsencrypt
+      - traefik.http.routers.syncthing.service=syncthing
+      - traefik.http.services.syncthing.loadbalancer.server.port=8384

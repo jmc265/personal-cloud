@@ -1,0 +1,25 @@
+version: "3.4"
+
+services:
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    environment:
+      - DOCKER_USR=${PUID}
+      - DOCKER_GRP=${PGID}
+    ports:
+      - 19999:19999
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - ${DOCKER_APP_DATA}/netdata/config:/etc/netdata
+      - ${DOCKER_APP_DATA}/netdata/lib:/var/lib/netdata
+      - ${DOCKER_APP_DATA}/netdata/cache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro

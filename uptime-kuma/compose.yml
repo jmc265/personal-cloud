@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma
+    container_name: uptime-kuma
+    volumes:
+      - ${DOCKER_APP_DATA}/uptime-kuma:/app/data
+    network_mode: host

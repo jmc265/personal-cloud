@@ -1,0 +1,2 @@
+00 23 * * * docker exec photoprism photoprism convert && curl -fsS -m 10 --retry 5 -o /dev/null http://${LOCAL_DOMAIN}:9320/ping/7RCO56bYw4AsO0AxcmencA/photoprism-convert
+30 23 * * * docker exec photoprism photoprism index --cleanup && curl -fsS -m 10 --retry 5 -o /dev/null http://${LOCAL_DOMAIN}:9320/ping/7RCO56bYw4AsO0AxcmencA/photoprism-index

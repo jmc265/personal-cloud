@@ -1,0 +1,15 @@
+version: "3.4"
+
+services:
+  scanservjs:
+    container_name: scanservjs
+    image: sbs20/scanservjs
+    ports:
+      - 8888:8080
+    user: 2001:1000
+    volumes:
+      - /var/run/dbus:/var/run/dbus
+      - /dev/bus/usb/001/003:/dev/bus/usb/001/003
+      - ${PRIMARY_STORAGE}/docs/scan-output:/app/data/output
+    privileged: true
+    restart: unless-stopped

@@ -1,0 +1,13 @@
+version: "3.4"
+
+services:
+  az-ddns:
+    build: ./
+    container_name: az-ddns
+    environment:
+      AZURE_CLIENT_ID: ${AZURE_CLIENT_ID}
+      AZURE_CLIENT_SECRET: ${AZURE_CLIENT_SECRET}
+      AZURE_TENANT_ID: ${AZURE_TENANT_ID}
+      AZURE_DDNS_RESOURCE_GROUP_NAME: ${AZURE_DDNS_RESOURCE_GROUP_NAME}
+      AZURE_DDNS_ZONE_NAME: ${AZURE_DDNS_ZONE_NAME}
+      AZURE_DDNS_RECORD_NAME: ${AZURE_DDNS_RECORD_NAME}

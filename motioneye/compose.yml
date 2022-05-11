@@ -1,0 +1,11 @@
+version: "3.4"
+
+services:
+  motioneye:
+    container_name: motioneye
+    image: ccrisan/motioneye:master-amd64
+    volumes:
+      - ${DOCKER_APP_DATA}/motioneye:/etc/motioneye
+      - ${PRIMARY_STORAGE}/media/cctv:/cctv:z
+    restart: unless-stopped
+    network_mode: host
