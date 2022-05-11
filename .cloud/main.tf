@@ -4,7 +4,7 @@ terraform {
     organization = "james-cx"
 
     workspaces {
-      name = "home-server"
+      name = "personal-cloud"
     }
   }
 
