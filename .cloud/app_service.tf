@@ -21,7 +21,7 @@ resource "azurerm_linux_web_app" "uptime_kuma" {
   site_config {
     always_on = true
     application_stack {
-      docker_image = "registry.hub.docker.com/louislam/uptime-kuma"
+      docker_image = "https://index.docker.io/louislam/uptime-kuma"
       docker_image_tag = "latest"
     }
   }
