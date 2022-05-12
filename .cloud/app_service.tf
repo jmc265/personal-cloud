@@ -3,7 +3,7 @@ resource "azurerm_service_plan" "app_service_plan" {
   resource_group_name = azurerm_resource_group.personalcloud.name
   location            = azurerm_resource_group.personalcloud.location
   os_type             = "Linux"
-  sku_name            = "FREE"
+  sku_name            = "Free"
 }
 
 resource "azurerm_linux_web_app" "uptime_kuma" {
