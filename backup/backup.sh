@@ -1,5 +1,5 @@
 #!/bin/bash
 set -ex
 
-bash ${HOME_SERVER_DIR}/backup/backupLocal.sh
-bash ${HOME_SERVER_DIR}/backup/backupCloud.sh
+bash ${PERSONAL_CLOUD_DIR}/backup/backupLocal.sh
+bash ${PERSONAL_CLOUD_DIR}/backup/backupCloud.sh

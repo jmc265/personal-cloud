@@ -1,1 +1,1 @@
-0 0 * * * ${HOME_SERVER_DIR}/backup/backup.sh
+0 0 * * * ${PERSONAL_CLOUD_DIR}/backup/backup.sh

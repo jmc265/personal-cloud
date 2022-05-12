@@ -10,5 +10,5 @@ services:
       - "1880:1880"
     volumes:
       - ${DOCKER_APP_DATA}/node-red:/data
-      - ${HOME_SERVER_DIR}/home-tracker:/home-tracker:z
+      - ${PERSONAL_CLOUD_DIR}/home-tracker:/home-tracker:z
     restart: unless-stopped
