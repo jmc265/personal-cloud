@@ -6,7 +6,7 @@ export CRONTAB_FILES="$(find . | grep "crontab")"
 # Start all Docker (compose) containers
 for COMPOSE_FILE in $COMPOSE_FILES
 do
-    docker-compose -f $COMPOSE_FILE --env-file ./.env up -d --build --remove-orphans
+    docker-compose -f $COMPOSE_FILE --env-file $ENV_FILE up -d --build --remove-orphans
 done
 
 # Re-create all Crontab
