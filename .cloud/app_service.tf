@@ -14,6 +14,10 @@ resource "azurerm_linux_web_app" "uptime_kuma" {
 
   https_only = true
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   site_config {
     always_on = true
     application_stack {
