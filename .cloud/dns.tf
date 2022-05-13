@@ -1,10 +1,6 @@
 resource "azurerm_dns_zone" "root" {
   name                = var.root_domain
   resource_group_name = azurerm_resource_group.personalcloud.name
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 # This will act as my DDNS record

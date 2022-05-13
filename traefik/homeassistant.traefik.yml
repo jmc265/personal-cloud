@@ -4,7 +4,7 @@
 http:
   routers:
     homeassistant:
-      rule: "Host(`homeassistant.james.cx`)"
+      rule: "Host(`homeassistant.${INET_DOMAIN}`)"
       tls:
         certresolver: letsencrypt
       entrypoints:
