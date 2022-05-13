@@ -4,5 +4,5 @@ FROM mcr.microsoft.com/azure-cli
 RUN apk add --no-cache bind-tools
 
 WORKDIR /app
-ADD az-ddns.sh /
+ADD az-ddns.sh /app
 ENTRYPOINT /app/az-ddns.sh
