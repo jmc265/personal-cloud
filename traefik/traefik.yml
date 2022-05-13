@@ -1,6 +1,6 @@
 providers:
   docker:
-    defaultRule: "Host(`{{ trimPrefix `/` .Name }}.${INET_DOMAIN}`)"
+    defaultRule: "Host(`{{ trimPrefix `/` .Name }}.{{env "INET_DOMAIN" }}`)"
     exposedByDefault: false
   file:
     filename: /etc/traefik/homeassistant.traefik.yml
