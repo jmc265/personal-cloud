@@ -8,12 +8,13 @@ BORG_DEST_DIR="${SECONDARY_STORAGE}/backups/borg"
 
 do_backup() {
     set -ex
-    pushd ${GIT_REPO_ROOT_PATH}/jupiter
+    pushd ${WORSPACE_DIR}
 
     # Stop all running docker containers
     ./stop-all.sh
 
     # Copy over files from ext2 to ext
+    # Can add `-v` to sync command, but then $BACKOUT_OUTPUT is too large and curl errors with "argument list too long"
     docker run \
         --rm \
         -v $SRC_DIR:/src:ro \
@@ -22,7 +23,7 @@ do_backup() {
         -v $DOCKER_APP_DATA/rclone/logs:/logs \
         --name rclone-local-sync \
         rclone/rclone \
-        sync /src /dest --stats 0 -v --exclude "/downloads/**" 2>&1 \
+        sync /src /dest --stats 0 --exclude "/downloads/**" 2>&1 \
         --links
 
     # Restart all docker containers
