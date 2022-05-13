@@ -1,1 +1,1 @@
-0 * * * * ${PERSONAL_CLOUD_DIR}/jeeb-uk/push-content.sh && curl -fsS -m 10 --retry 5 -o /dev/null http://${LOCAL_DOMAIN}:9320/ping/7RCO56bYw4AsO0AxcmencA/build-publish-jeebuk
+0 * * * * ${PERSONAL_CLOUD_DIR}/jeeb-uk/push-content.sh; [ "$?" -le 1 ] && curl -fsS -m 10 --retry 5 -o /dev/null http://${LOCAL_DOMAIN}:9320/ping/7RCO56bYw4AsO0AxcmencA/build-publish-jeebuk
