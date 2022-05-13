@@ -7,3 +7,8 @@ services:
     volumes:
       - ${DOCKER_APP_DATA}/uptime-kuma:/app/data
     network_mode: host
+    labels:
+      - flame.type=app
+      - flame.name=Uptime Kuma
+      - flame.url=http://${LOCAL_DOMAIN}:3001
+      - flame.icon=list-status

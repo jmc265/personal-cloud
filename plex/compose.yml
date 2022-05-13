@@ -21,3 +21,7 @@ services:
       - traefik.http.routers.plex.tls=true
       - traefik.http.routers.plex.tls.certresolver=letsencrypt
       - traefik.http.services.plex.loadbalancer.server.port=32400
+      - flame.type=app
+      - flame.name=Plex
+      - flame.url=https://media.${INET_DOMAIN}
+      - flame.icon=plex

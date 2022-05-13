@@ -17,3 +17,8 @@ services:
     restart: unless-stopped
     privileged: true
     network_mode: host
+    labels:
+      - flame.type=app
+      - flame.name=Home Assistant
+      - flame.url=https://homeassistant.${INET_DOMAIN}
+      - flame.icon=home

@@ -19,3 +19,8 @@ services:
     ports:
       - 9320:8000
     restart: unless-stopped
+    labels:
+      - flame.type=app
+      - flame.name=Health Checks
+      - flame.url=http://${LOCAL_DOMAIN}:9320
+      - flame.icon=bottle-tonic-plus

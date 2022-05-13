@@ -13,3 +13,8 @@ services:
       - ${PRIMARY_STORAGE}/docs/scan-output:/app/data/output
     privileged: true
     restart: unless-stopped
+    labels:
+      - flame.type=app
+      - flame.name=Scanservjs
+      - flame.url=http://${LOCAL_DOMAIN}:8888
+      - flame.icon=scanner

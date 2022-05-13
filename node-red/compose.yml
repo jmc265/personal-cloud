@@ -12,3 +12,8 @@ services:
       - ${DOCKER_APP_DATA}/node-red:/data
       - ${PERSONAL_CLOUD_DIR}/home-tracker:/home-tracker:z
     restart: unless-stopped
+    labels:
+      - flame.type=app
+      - flame.name=NodeRED
+      - flame.url=http://${LOCAL_DOMAIN}:1880
+      - flame.icon=format-text-wrapping-overflow

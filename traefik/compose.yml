@@ -11,3 +11,8 @@ services:
       - ${PERSONAL_CLOUD_DIR}/traefik/homeassistant.traefik.yml:/etc/traefik/homeassistant.traefik.yml
       - ${DOCKER_APP_DATA}/traefik/letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - flame.type=app
+      - flame.name=Traefik
+      - flame.url=http://${LOCAL_DOMAIN}:8080
+      - flame.icon=lock

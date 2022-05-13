@@ -9,3 +9,8 @@ services:
       - ${PRIMARY_STORAGE}/media/cctv:/cctv:z
     restart: unless-stopped
     network_mode: host
+    labels:
+      - flame.type=app
+      - flame.name=Motioneye
+      - flame.url=http://${LOCAL_DOMAIN}:8765
+      - flame.icon=cctv

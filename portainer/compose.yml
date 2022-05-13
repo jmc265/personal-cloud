@@ -14,6 +14,11 @@ services:
       - ${DOCKER_APP_DATA}/portainer:/data
     networks:
       - portainer
+    labels:
+      - flame.type=app
+      - flame.name=Portainer
+      - flame.url=http://${LOCAL_DOMAIN}:9090
+      - flame.icon=docker
 
 networks:
   portainer:

@@ -45,6 +45,10 @@ services:
       - traefik.http.routers.photoprism.rule=Host(`photos.${INET_DOMAIN}`)
       - traefik.http.routers.photoprism.tls=true
       - traefik.http.routers.photoprism.tls.certresolver=letsencrypt
+      - flame.type=app
+      - flame.name=Photoprism
+      - flame.url=https://photos.${INET_DOMAIN}
+      - flame.icon=camera
 
   mariadb:
     image: mariadb:10.5

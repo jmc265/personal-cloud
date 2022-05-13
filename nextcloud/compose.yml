@@ -25,6 +25,10 @@ services:
       - "traefik.http.middlewares.nextcloud-dav.replacepathregex.regex=^/.well-known/ca(l|rd)dav"
       - "traefik.http.middlewares.nextcloud-dav.replacepathregex.replacement=/remote.php/dav/"
       - "traefik.http.services.nextcloud.loadbalancer.server.port=9897"
+      - flame.type=app
+      - flame.name=Nextcloud
+      - flame.url=https://cloud.${INET_DOMAIN}
+      - flame.icon-cloud
 
   nextcloud_db:
     image: mariadb

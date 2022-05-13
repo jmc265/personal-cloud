@@ -12,3 +12,8 @@ services:
     ports:
       - 2930:8000
     restart: unless-stopped
+    labels:
+      - flame.type=app
+      - flame.name=Apprise
+      - flame.url=http://${LOCAL_DOMAIN}:2930
+      - flame.icon=android-messages
