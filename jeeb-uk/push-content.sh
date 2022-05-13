@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-PROJECT_ROOT_DIR=/mnt/ext2/workspace/jeeb-uk
+PROJECT_ROOT_DIR=${WORKSPACE_DIR}/jeeb-uk
 CONTENT_DIR=${PROJECT_ROOT_DIR}/src/content
 
 pushd $CONTENT_DIR
