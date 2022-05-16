@@ -76,7 +76,7 @@ Used to send the Borg snapshots to a cloud provider
 ## Create config:
 
 ```shell
-docker run -it --rm -v /mnt/ext2/docker/rclone/config:/config/rclone rclone/rclone config
+docker run -it --rm -v ${PRIMARY_STORAGE}/docker/rclone/config:/config/rclone rclone/rclone config
 
 az ad sp create-for-rbac --name "<name>" \
       --role "Storage Blob Data Owner" \

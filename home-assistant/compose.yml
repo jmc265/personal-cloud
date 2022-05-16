@@ -11,8 +11,8 @@ services:
       - SYS_ADMIN
     volumes:
       - ${DOCKER_APP_DATA}/homeassistant:/config
-      - ${SECONDARY_STORAGE}:/mnt/ext:z
-      - ${PRIMARY_STORAGE}:/mnt/ext2:z
+      - ${PRIMARY_STORAGE}:/mnt/primary:z
+      - ${SECONDARY_STORAGE}:/mnt/secondary:z
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     privileged: true

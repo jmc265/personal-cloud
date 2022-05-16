@@ -13,7 +13,7 @@ do_backup() {
     # Stop all running docker containers
     ./stop-all.sh
 
-    # Copy over files from ext2 to ext
+    # Copy over files from primary to secondary
     # Can add `-v` to sync command, but then $BACKOUT_OUTPUT is too large and curl errors with "argument list too long"
     docker run \
         --rm \
