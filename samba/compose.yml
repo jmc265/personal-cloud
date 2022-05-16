@@ -22,6 +22,6 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ${SECONDARY_STORAGE}:/mnt/ext:z
-      - ${PRIMARY_STORAGE}:/mnt/ext2:z
-    command: '-s "ext;/mnt/ext;yes;no;yes;all;all;all" -s "ext2;/mnt/ext2;yes;no;yes;all;all;all" -u "${ADMIN_USERNAME};${ADMIN_PASSWORD}" -g "inherit permissions = yes" -g "directory mask = 02775" -g "force directory mode = 02775"'
+      - ${PRIMARY_STORAGE}:/mnt/primary:z
+      - ${SECONDARY_STORAGE}:/mnt/secondary:z
+    command: '-s "primary;/mnt/primary;yes;no;yes;all;all;all" -s "secondary;/mnt/secondary;yes;no;yes;all;all;all" -u "${ADMIN_USERNAME};${ADMIN_PASSWORD}" -g "inherit permissions = yes" -g "directory mask = 02775" -g "force directory mode = 02775"'
