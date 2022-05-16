@@ -18,57 +18,6 @@ resource "azurerm_storage_container" "parents_backup" {
   }
 }
 
-
-resource "azurerm_storage_container" "jk_photos_backup" {
-  name                  = "${var.short_prefix}-jk-photos-backup"
-  storage_account_name  = azurerm_storage_account.backup.name
-  container_access_type = "private"
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
-resource "azurerm_storage_container" "jk_docs_backup" {
-  name                  = "${var.short_prefix}-jk-docs-backup"
-  storage_account_name  = azurerm_storage_account.backup.name
-  container_access_type = "private"
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
-resource "azurerm_storage_container" "jk_homevideo_backup" {
-  name                  = "${var.short_prefix}-jk-homevideo-backup"
-  storage_account_name  = azurerm_storage_account.backup.name
-  container_access_type = "private"
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
-resource "azurerm_storage_container" "jk_cctv_backup" {
-  name                  = "${var.short_prefix}-jk-cctv-backup"
-  storage_account_name  = azurerm_storage_account.backup.name
-  container_access_type = "private"
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
-resource "azurerm_storage_container" "jk_docker_backup" {
-  name                  = "${var.short_prefix}-jk-docker-backup"
-  storage_account_name  = azurerm_storage_account.backup.name
-  container_access_type = "private"
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
 resource "azurerm_storage_container" "jcx-jupiter-backup" {
   name                  = "${var.short_prefix}-jupiter-backup"
   storage_account_name  = azurerm_storage_account.backup.name
