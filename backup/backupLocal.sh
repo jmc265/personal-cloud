@@ -8,7 +8,7 @@ BORG_DEST_DIR="${SECONDARY_STORAGE}/backups/borg"
 
 do_backup() {
     set -ex
-    pushd ${WORSPACE_DIR}
+    pushd ${PERSONAL_CLOUD_DIR}
 
     # Stop all running docker containers
     ./stop-all.sh
