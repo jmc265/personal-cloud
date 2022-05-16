@@ -14,8 +14,8 @@ services:
       - 21027:21027/udp
     volumes:
       - ${DOCKER_APP_DATA}/syncthing:/config
-      - ${SECONDARY_STORAGE}:/mnt/ext:z
-      - ${PRIMARY_STORAGE}:/mnt/ext2:z
+      - ${PRIMARY_STORAGE}:/mnt/primary:z
+      - ${SECONDARY_STORAGE}:/mnt/secondary:z
     restart: unless-stopped
     labels:
       - traefik.enable=true
