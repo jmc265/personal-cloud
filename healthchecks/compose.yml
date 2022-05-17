@@ -13,6 +13,7 @@ services:
       - SUPERUSER_EMAIL=${ADMIN_EMAIL}
       - SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
       - APPRISE_ENABLED=True
+      - PING_BODY_LIMIT=100000
       - DEBUG=False
     volumes:
       - ${DOCKER_APP_DATA}/healthchecks:/config
