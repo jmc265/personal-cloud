@@ -52,14 +52,6 @@ resource "azurerm_dns_cname_record" "media" {
   record              = azurerm_dns_a_record.home.fqdn
 }
 
-resource "azurerm_dns_cname_record" "uptime" {
-  name                = "uptime"
-  zone_name           = azurerm_dns_zone.root.name
-  resource_group_name = azurerm_resource_group.personalcloud.name
-  ttl                 = 300
-  record              = azurerm_dns_a_record.home.fqdn
-}
-
 resource "azurerm_dns_cname_record" "cloud" {
   name                = "cloud"
   zone_name           = azurerm_dns_zone.root.name
@@ -67,6 +59,15 @@ resource "azurerm_dns_cname_record" "cloud" {
   ttl                 = 300
   record              = azurerm_dns_a_record.home.fqdn
 }
+
+resource "azurerm_dns_cname_record" "start" {
+  name                = "start"
+  zone_name           = azurerm_dns_zone.root.name
+  resource_group_name = azurerm_resource_group.personalcloud.name
+  ttl                 = 300
+  record              = azurerm_dns_a_record.home.fqdn
+}
+
 
 output "name_servers" {
   value = azurerm_dns_zone.root.name_servers
