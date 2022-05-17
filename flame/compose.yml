@@ -12,3 +12,8 @@ services:
     environment:
       - PASSWORD=${ADMIN_PASSWORD}
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.flame.rule=Host(`start.${INET_DOMAIN}`)
+      - traefik.http.routers.flame.tls=true
+      - traefik.http.routers.flame.tls.certresolver=letsencrypt
