@@ -8,14 +8,14 @@ Used to create snapshots of a source directory. The snapshots are pruned
 ## List all backups in the repo:
 
 ```shell
-BORG_BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
+BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
 docker run \
   --rm \
   -e BORG_REPO=/borg/repo \
   -e BORG_PASSPHRASE=$BORG_REPO_PASSWORD \
   -e BORG_PARAMS='list' \
   -v ${DOCKER_APP_DATA}/borg/config:/root \
-  -v $BORG_BORG_REPO_DIR:/borg/repo \
+  -v $BORG_REPO_DIR:/borg/repo \
   --name borg-backup \
   pschiffe/borg
 ```
@@ -23,7 +23,7 @@ docker run \
 ## Extract a backup:
 
 ```shell
-BORG_BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
+BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
 EXTRACT_DEST="${SECONDARY_STORAGE}/backups/restore"
 ARCHIVE_NAME="983c0f240eae_2022-05-05"
 docker run \
@@ -41,7 +41,7 @@ docker run \
 
 ## Export the repo key:
 ```shell
-BORG_BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
+BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
 docker run \
   --rm \
   -e BORG_REPO=/borg/repo \
@@ -57,7 +57,7 @@ sudo cat ./borg_exported_key
 
 ## Break the lock
 ```shell
-BORG_BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
+BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
 docker run \
   --rm \
   -e BORG_REPO=/borg/repo \
