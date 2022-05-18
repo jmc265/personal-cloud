@@ -1,7 +1,7 @@
 version: "3.4"
 
 services:
- mariadb:
+  mariadb:
     image: ghcr.io/linuxserver/mariadb:latest
     container_name: lychee_mariadb
     restart: unless-stopped
