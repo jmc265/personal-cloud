@@ -20,6 +20,14 @@ resource "azurerm_dns_cname_record" "photoprism" {
   record              = azurerm_dns_a_record.home.fqdn
 }
 
+resource "azurerm_dns_cname_record" "lychee" {
+  name                = "photos2"
+  zone_name           = azurerm_dns_zone.root.name
+  resource_group_name = azurerm_resource_group.personalcloud.name
+  ttl                 = 300
+  record              = azurerm_dns_a_record.home.fqdn
+}
+
 resource "azurerm_dns_cname_record" "syncthing" {
   name                = "sync"
   zone_name           = azurerm_dns_zone.root.name
