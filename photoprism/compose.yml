@@ -38,7 +38,7 @@ services:
       PHOTOPRISM_HTTP_HOST: "0.0.0.0"
       PHOTOPRISM_HTTP_PORT: 2342
     volumes:
-      - ${PRIMARY_STORAGE}/media/photos:/photoprism/originals/photos:ro
+      - ${PRIMARY_STORAGE}/media/home:/photoprism/originals/photos:ro
       - ${DOCKER_APP_DATA}/photoprism:/photoprism/storage
     labels:
       - traefik.enable=true
