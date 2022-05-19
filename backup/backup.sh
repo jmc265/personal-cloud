@@ -1,6 +1,7 @@
 #!/bin/bash
 set -ex
 
+echo $(date) >> ${PERSONAL_CLOUD_DIR}/backup-log
 echo "Backup.sh - start" >> ${PERSONAL_CLOUD_DIR}/backup-log
 echo "Backup.sh - start local" >> ${PERSONAL_CLOUD_DIR}/backup-log
 bash ${PERSONAL_CLOUD_DIR}/backup/backupLocal.sh
