@@ -21,7 +21,11 @@ services:
       - 9320:8000
     restart: unless-stopped
     labels:
+      - traefik.enable=true
+      - traefik.http.routers.healthchecks.rule=Host(`healthchecks.${INET_DOMAIN}`)
+      - traefik.http.routers.healthchecks.tls=true
+      - traefik.http.routers.healthchecks.tls.certresolver=letsencrypt
       - flame.type=app
       - flame.name=Health Checks
-      - flame.url=http://${LOCAL_DOMAIN}:9320
+      - flame.url=https://healthchecks.${INET_DOMAIN}
       - flame.icon=bottle-tonic-plus
