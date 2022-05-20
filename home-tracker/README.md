@@ -1,0 +1,1 @@
+Using https://script.google.com to put the ical file into our Google Calendar on a regular basis

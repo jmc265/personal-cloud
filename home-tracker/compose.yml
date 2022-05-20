@@ -6,6 +6,7 @@ services:
     image: nginx
     volumes:
       - ${PERSONAL_CLOUD_DIR}/home-tracker:/usr/share/nginx/html:z
+      - ${PERSONAL_CLOUD_DIR}/home-tracker/nginx.conf:/etc/nginx/nginx.conf
       - ${PERSONAL_CLOUD_DIR}/home-tracker/mime.types:/etc/nginx/mime.types
     ports:
       - 4400:80
