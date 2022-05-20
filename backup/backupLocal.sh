@@ -1,7 +1,5 @@
 #!/bin/bash
-set -ex
-
-# Environments
+# Environment variables
 SRC_DIR=${PRIMARY_STORAGE}
 RCLONE_DEST_DIR="${SECONDARY_STORAGE}/backups/rclone"
 BORG_DEST_DIR="${SECONDARY_STORAGE}/backups/borg"
@@ -66,7 +64,9 @@ curl -m 30 --retry 5 http://${LOCAL_DOMAIN}:9320/ping/7RCO56bYw4AsO0AxcmencA/nig
 
 echo "BackupLocal.sh - start do_backup" >> ${PERSONAL_CLOUD_DIR}/backup-log
 # Do backup
-BACKUP_OUTPUT=$(do_backup 2>&1)
+#BACKUP_OUTPUT=$(do_backup 2>&1)
+do_backup
+BACKUP_OUTPUT="done"
 
 echo "BackupLocal.sh - end do_backup" >> ${PERSONAL_CLOUD_DIR}/backup-log
 
