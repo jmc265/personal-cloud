@@ -20,6 +20,7 @@ module "container-server" {
     TRAEFIK_API_DASHBOARD = false
     DOCKER_APP_DATA       = "/run/app"
     ADMIN_PASSWORD        = var.admin_password
+    INET_DOMAIN           = "pluto.${var.root_domain}"
   }
 
   # extra cloud-init config provided to setup + format persistent disk

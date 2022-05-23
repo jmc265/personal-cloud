@@ -17,6 +17,9 @@ terraform {
       source = "hashicorp/google"
       version = ">= 4.21.0"
     }
+    oci = {
+      version = ">= 4.0.0"
+    }
   }
 
   required_version = ">= 0.14.9"
@@ -34,6 +37,10 @@ provider "google" {
   project = var.gcp_project_id
   region  = var.gcp_region
   zone    = "${var.gcp_region}-b"
+}
+
+provider "oci" {
+  
 }
 
 data "azurerm_subscription" "current" {}
