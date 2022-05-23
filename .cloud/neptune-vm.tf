@@ -197,7 +197,7 @@ data "oci_identity_availability_domains" "ads" {
   compartment_id = var.oci_tenancy_ocid
 }
 
-resource "oci_core_instance" "ubuntu_instance" {
+resource "oci_core_instance" "neptune" {
     # Required
     availability_domain = data.oci_identity_availability_domains.ads.availability_domains[0].name
     compartment_id = var.oci_tenancy_ocid
