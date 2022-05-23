@@ -44,7 +44,7 @@ EOT
 
 resource "google_compute_instance" "pluto" {
   name           = "pluto"
-  machine_type   = "f1-micro"
+  machine_type   = "e2-micro"
   can_ip_forward = "true"
   allow_stopping_for_update = "true"
   tags         = ["ssh", "http-server", "https-server"]
