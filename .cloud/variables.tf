@@ -27,6 +27,11 @@ variable "gcp_region" {
   default = "us-east1"
 }
 
+variable "gcp_billing_account_id" {
+  type = string
+  description = "GCP billing account ID"
+}
+
 variable "root_domain" {
   type        = string
   description = "Root Domain for hosting services"

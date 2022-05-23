@@ -20,12 +20,8 @@ resource "azurerm_consumption_budget_subscription" "budget" {
   }
 }
 
-data "google_billing_account" "account" {
-  billing_account = "000000-0000000-0000000-000000"
-}
-
 resource "google_billing_budget" "budget" {
-  billing_account = data.google_billing_account.account.id
+  billing_account = var.gcp_billing_account_id
   display_name = "Billing Budget"
   amount {
     specified_amount {
