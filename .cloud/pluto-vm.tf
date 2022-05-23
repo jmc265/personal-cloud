@@ -21,7 +21,6 @@ module "container-server" {
   env = {
     PORTAINER_PASSWORD    = var.email_address
     TRAEFIK_API_DASHBOARD = true
-    DOCKER_LOG_DRIVER     = "gcplogs"
   }
 
   # extra cloud-init config provided to setup + format persistent disk
