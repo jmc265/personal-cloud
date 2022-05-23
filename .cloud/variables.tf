@@ -46,3 +46,8 @@ variable "email_address" {
   type        = string
   description = "Email Address"
 }
+
+variable "admin_password" {
+  type        = string
+  description = "Admin Password"
+}

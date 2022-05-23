@@ -1,18 +1,41 @@
 version: "3"
 
 services:
-  portainer:
+  uptime-kuma:
+    image: louislam/uptime-kuma
+    container_name: uptime-kuma
     restart: unless-stopped
-    image: portainer/portainer:latest
-    command: --admin-password ${PORTAINER_PASSWORD}
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${DOCKER_APP_DATA}/uptime-kuma:/app/data
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`${domain}`)"
-      - "traefik.http.routers.portainer.entrypoints=websecure"
-      - "traefik.http.routers.portainer.tls=true"
-      - "traefik.http.routers.portainer.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.uptime.rule=Host(`uptime.${domain}`)"
+      - "traefik.http.routers.uptime.entrypoints=websecure"
+      - "traefik.http.routers.uptime.tls=true"
+      - "traefik.http.routers.uptime.tls.certresolver=letsencrypt"
+
+  healthchecks:
+    image: linuxserver/healthchecks
+    container_name: healthchecks
+    environment:
+      - TZ=Europe/London
+      - SITE_ROOT=https://healthchecks.${domain}
+      - SITE_NAME=Health Checks
+      - SUPERUSER_EMAIL=${email}
+      - SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
+      - APPRISE_ENABLED=True
+      - PING_BODY_LIMIT=100000
+      - DEBUG=False
+    volumes:
+      - ${DOCKER_APP_DATA}/healthchecks:/config
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.healthchecks.rule=Host(`healthchecks.${domain}`)
+      - traefik.http.routers.uptime.entrypoints=websecure
+      - traefik.http.routers.healthchecks.tls=true
+      - traefik.http.routers.healthchecks.tls.certresolver=letsencrypt
+
 networks:
   default:
     external:

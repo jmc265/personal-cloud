@@ -10,8 +10,6 @@ module "container-server" {
   domain = "pluto.${var.root_domain}"
   email  = var.email_address
 
-  letsencrypt_staging = true
-
   files = [
     {
       filename = "docker-compose.yaml"
@@ -19,8 +17,9 @@ module "container-server" {
     }
   ]
   env = {
-    PORTAINER_PASSWORD    = var.email_address
-    TRAEFIK_API_DASHBOARD = true
+    TRAEFIK_API_DASHBOARD = false
+    DOCKER_APP_DATA       = "/run/app"
+    ADMIN_PASSWORD        = var.admin_password
   }
 
   # extra cloud-init config provided to setup + format persistent disk
