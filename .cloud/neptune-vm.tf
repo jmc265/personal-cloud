@@ -207,7 +207,8 @@ data "oci_identity_availability_domains" "ads" {
 resource "oci_core_instance" "neptune" {
     # Required
     availability_domain = data.oci_identity_availability_domains.ads.availability_domains[0].name
-    compartment_id = oci_identity_compartment.neptune.id
+    # compartment_id = oci_identity_compartment.neptune.id
+    compartment_id = var.oci_tenancy_ocid
     shape = "VM.Standard.E2.1.Micro"
     source_details {
         # https://docs.oracle.com/en-us/iaas/images/image/8c01df73-ce27-42de-8bec-ab99e6447ba9/
