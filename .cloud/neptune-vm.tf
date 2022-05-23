@@ -1,6 +1,7 @@
 # https://www.lightenna.com/tech/2020/create-oracle-cloud-vm-using-terraform/
 # https://docs.oracle.com/en-us/iaas/developer-tutorials/tutorials/tf-compute/01-summary.htm
 # https://gfarcas.github.io/blog/03-12-2020-terraform-in-oracle/
+# https://github.com/gszathmari/homelab-on-oracle-cloud/blob/main/terraform/compute-x86_64.tf
 
 # resource "oci_core_vcn" "vcn" {
 #   cidr_block = "10.1.0.0/16"
@@ -186,7 +187,7 @@
 #     preserve_boot_volume = false
 # }
 
-resource "oci_identity_compartment" "homelab" {
+resource "oci_identity_compartment" "neptune" {
   compartment_id = var.oci_tenancy_ocid
   description    = "Compartment for neptune"
   name           = "Neptune"
