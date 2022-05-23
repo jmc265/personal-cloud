@@ -76,7 +76,7 @@ resource "google_compute_instance" "pluto" {
 resource "google_compute_disk" "default" {
   name    = "disk-app-server"
   type    = "pd-standard"
-  zone    = "${var.gcp_region}-a"
+  zone    = "${var.gcp_region}-b"
   size    = 30
 }
 
