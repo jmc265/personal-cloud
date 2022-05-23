@@ -186,6 +186,12 @@
 #     preserve_boot_volume = false
 # }
 
+resource "oci_identity_compartment" "homelab" {
+  compartment_id = var.oci_tenancy_ocid
+  description    = "Compartment for neptune"
+  name           = "Neptune"
+}
+
 resource "oci_core_vcn" "vcn" {
   cidr_block = "10.1.0.0/16"
   compartment_id = var.oci_tenancy_ocid
@@ -200,7 +206,7 @@ data "oci_identity_availability_domains" "ads" {
 resource "oci_core_instance" "neptune" {
     # Required
     availability_domain = data.oci_identity_availability_domains.ads.availability_domains[0].name
-    compartment_id = var.oci_tenancy_ocid
+    compartment_id = oci_identity_compartment.neptune.id
     shape = "VM.Standard.E2.1.Micro"
     source_details {
         # https://docs.oracle.com/en-us/iaas/images/image/8c01df73-ce27-42de-8bec-ab99e6447ba9/
@@ -212,7 +218,6 @@ resource "oci_core_instance" "neptune" {
     display_name = "neptune"
     create_vnic_details {
         assign_public_ip = true
-        assign_private_dns_record = true
         subnet_id = oci_core_vcn.vcn.id
     }
     metadata = {
