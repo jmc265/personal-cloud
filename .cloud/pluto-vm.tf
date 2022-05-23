@@ -19,6 +19,7 @@ module "container-server" {
   env = {
     TRAEFIK_API_DASHBOARD = false
     DOCKER_APP_DATA       = "/run/app"
+    ADMIN_EMAIL           = var.email_address
     ADMIN_PASSWORD        = var.admin_password
     INET_DOMAIN           = "pluto.${var.root_domain}"
   }

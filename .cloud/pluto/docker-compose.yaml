@@ -13,15 +13,16 @@ services:
       - traefik.http.routers.uptime.entrypoints=websecure
       - traefik.http.routers.uptime.tls=true
       - traefik.http.routers.uptime.tls.certresolver=letsencrypt
+      - traefik.http.services.uptime.loadBalancer.server.port=3001
 
   healthchecks:
     image: linuxserver/healthchecks
     container_name: healthchecks
     environment:
       - TZ=Europe/London
-      - SITE_ROOT=https://healthchecks.${domain}
+      - SITE_ROOT=https://healthchecks.${INET_DOMAIN}
       - SITE_NAME=Health Checks
-      - SUPERUSER_EMAIL=${email}
+      - SUPERUSER_EMAIL=${ADMIN_EMAIL}
       - SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
       - APPRISE_ENABLED=True
       - PING_BODY_LIMIT=100000
@@ -32,7 +33,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.healthchecks.rule=Host(`healthchecks.${INET_DOMAIN}`)
-      - traefik.http.routers.uptime.entrypoints=websecure
+      - traefik.http.routers.healthchecks.entrypoints=websecure
       - traefik.http.routers.healthchecks.tls=true
       - traefik.http.routers.healthchecks.tls.certresolver=letsencrypt
 
