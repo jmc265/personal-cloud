@@ -70,6 +70,10 @@ resource "google_compute_instance" "pluto" {
   scheduling {
     automatic_restart = true
   }
+
+  lifecycle {
+    ignore_changes = [attached_disk]
+  }
 }
 
 data "google_compute_image" "cos" {
@@ -83,7 +87,7 @@ resource "google_compute_disk" "default" {
   name    = "disk-app-server"
   type    = "pd-standard"
   zone    = "${var.gcp_region}-b"
-  size    = 10
+  size    = 20
 }
 
 resource "google_compute_attached_disk" "default" {
