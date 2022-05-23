@@ -1,3 +1,5 @@
+## ---- Azure
+
 variable "azure_subscription_id" {
   type        = string
   description = "Azure Subscription Id"
@@ -18,6 +20,8 @@ variable "azure_tenant_id" {
   description = "Azure Tenant Id"
 }
 
+## ---- GCP
+
 variable "gcp_project_id" {
   type        = string
   description = "GCP Project ID"
@@ -31,6 +35,35 @@ variable "gcp_billing_account_id" {
   type = string
   description = "GCP billing account ID"
 }
+
+## ---- OCI
+
+variable "oci_region" {
+  default = "uk-london-1"
+}
+
+
+variable "oci_tenancy_ocid" {
+  type = string
+  description = "OCI Tenancy OCID"
+}
+
+variable "oci_user_ocid" {
+  type = string
+  description = "OCI User OCID"
+}
+
+variable "oci_fingerprint" {
+  type = string
+  description = "OCI Fingerpring"
+}
+
+variable "oci_private_key" {
+  type = string
+  description = "OCI Private Key"
+}
+
+## ---- General
 
 variable "root_domain" {
   type        = string
