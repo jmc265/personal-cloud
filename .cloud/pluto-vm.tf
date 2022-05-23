@@ -56,7 +56,7 @@ resource "google_compute_instance" "pluto" {
     initialize_params {
       type  = "pd-standard"   
       # https://cloud.google.com/compute/docs/images/os-details
-      image = "cos-cloud/cos-97-lts"
+      image = data.google_compute_image.cos.self_link
     }
   }
 
@@ -71,16 +71,37 @@ resource "google_compute_instance" "pluto" {
   }
 }
 
+data "google_compute_image" "cos" {
+  project = "cos-cloud"
+  family  = "cos-97-lts"
+}
+
 /* Disk --------------------------------------------------------------------- */
 
 resource "google_compute_disk" "default" {
   name    = "disk-app-server"
   type    = "pd-standard"
   zone    = "${var.gcp_region}-b"
-  size    = 30
+  size    = 10
 }
 
 resource "google_compute_attached_disk" "default" {
   disk     = google_compute_disk.default.id
   instance = google_compute_instance.pluto.id
+}
+
+/* Firewall --------------------------------------------------------------------- */
+
+resource "google_compute_firewall" "http-server" {
+  name    = "default-allow-http"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  // Allow traffic from everywhere to instances with an http-server tag
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["http-server"]
 }
