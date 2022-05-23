@@ -46,6 +46,7 @@ resource "google_compute_instance" "pluto" {
   machine_type   = "f1-micro"
   can_ip_forward = "true"
   allow_stopping_for_update = "true"
+  tags         = ["ssh", "http-server", "https-server"]
 
   metadata = {
     user-data = module.container-server.cloud_config
@@ -97,10 +98,24 @@ resource "google_compute_firewall" "http-server" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80", "443"]
+    ports    = ["80"]
   }
 
   // Allow traffic from everywhere to instances with an http-server tag
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["http-server"]
+}
+
+resource "google_compute_firewall" "https-server" {
+  name    = "default-allow-https"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  // Allow traffic from everywhere to instances with an http-server tag
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["https-server"]
 }
