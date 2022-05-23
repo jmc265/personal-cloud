@@ -36,33 +36,6 @@ variable "gcp_billing_account_id" {
   description = "GCP billing account ID"
 }
 
-## ---- OCI
-
-variable "oci_region" {
-  default = "uk-london-1"
-}
-
-
-variable "oci_tenancy_ocid" {
-  type = string
-  description = "OCI Tenancy OCID"
-}
-
-variable "oci_user_ocid" {
-  type = string
-  description = "OCI User OCID"
-}
-
-variable "oci_fingerprint" {
-  type = string
-  description = "OCI Fingerpring"
-}
-
-variable "oci_private_key" {
-  type = string
-  description = "OCI Private Key"
-}
-
 ## ---- General
 
 variable "root_domain" {
