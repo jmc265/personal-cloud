@@ -84,12 +84,12 @@ resource "azurerm_dns_a_record" "pluto" {
   records             = [google_compute_instance.pluto.network_interface.0.access_config.0.nat_ip]
 }
 
-resource "azurerm_dns_a_record" "pluto_wildcard" {
+resource "azurerm_dns_cname_record" "pluto_wildcard" {
   name                = "*.pluto"
   zone_name           = azurerm_dns_zone.root.name
   resource_group_name = azurerm_resource_group.personalcloud.name
   ttl                 = 300
-  records             = [google_compute_instance.pluto.network_interface.0.access_config.0.nat_ip]
+  record              = azurerm_dns_a_record.pluto.fqdn
 }
 
 output "name_servers" {
