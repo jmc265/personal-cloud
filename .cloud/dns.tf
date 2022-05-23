@@ -76,7 +76,7 @@ resource "azurerm_dns_cname_record" "healthchecks" {
   record              = azurerm_dns_a_record.home.fqdn
 }
 
-resource "azurerm_dns_aaaa_record" "pluto" {
+resource "azurerm_dns_a_record" "pluto" {
   name                = "pluto"
   zone_name           = azurerm_dns_zone.root.name
   resource_group_name = azurerm_resource_group.personalcloud.name

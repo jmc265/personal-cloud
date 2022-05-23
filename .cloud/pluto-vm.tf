@@ -1,6 +1,7 @@
 # https://github.com/billimek/cloudvm
 # https://spacelift.io/blog/getting-started-with-terraform-on-google-cloud-platform-gcp
 # https://github.com/christippett/terraform-cloudinit-container-server/tree/master
+# Firewall --> https://github.com/sethvargo/terraform-gcp-examples/blob/master/public-instance-webserver/main.tf
 
 module "container-server" {
   source  = "christippett/container-server/cloudinit"
