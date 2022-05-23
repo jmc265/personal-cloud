@@ -1,1 +1,1 @@
-*/30 * * * * docker run --rm --env-file $ENV_FILE az-ddns_az-ddns && curl -fsS -m 30 --retry 5 -o /dev/null http://${LOCAL_DOMAIN}:9320/ping/7RCO56bYw4AsO0AxcmencA/azure-ddns-update
+*/30 * * * * docker run --rm --env-file $ENV_FILE az-ddns_az-ddns && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/azure-ddns-update
