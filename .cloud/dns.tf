@@ -92,14 +92,6 @@ resource "azurerm_dns_cname_record" "pluto_wildcard" {
   record              = azurerm_dns_a_record.pluto.fqdn
 }
 
-resource "azurerm_dns_a_record" "neptune" {
-  name                = "neptune"
-  zone_name           = azurerm_dns_zone.root.name
-  resource_group_name = azurerm_resource_group.personalcloud.name
-  ttl                 = 300
-  records             = [oci_core_instance.neptune.public_ip]
-}
-
 output "name_servers" {
   value = azurerm_dns_zone.root.name_servers
 }
