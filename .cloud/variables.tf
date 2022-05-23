@@ -18,6 +18,15 @@ variable "azure_tenant_id" {
   description = "Azure Tenant Id"
 }
 
+variable "gcp_project_id" {
+  type        = string
+  description = "GCP Project ID"
+}
+
+variable "gcp_region" {
+  default = "us-east1"
+}
+
 variable "root_domain" {
   type        = string
   description = "Root Domain for hosting services"

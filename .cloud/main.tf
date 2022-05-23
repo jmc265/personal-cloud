@@ -13,6 +13,10 @@ terraform {
       source  = "hashicorp/azurerm"
       version = ">= 2.26"
     }
+    google = {
+      source = "hashicorp/google"
+      version = ">= 4.21.0"
+    }
   }
 
   required_version = ">= 0.14.9"
@@ -24,6 +28,12 @@ provider "azurerm" {
   client_id       = var.azure_client_id
   client_secret   = var.azure_client_secret
   tenant_id       = var.azure_tenant_id
+}
+
+provider "google" {
+  project = var.gcp_project_id
+  region  = var.gcp_region
+  zone    = "${var.gcp_region}-b"
 }
 
 data "azurerm_subscription" "current" {}
