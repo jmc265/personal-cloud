@@ -4,6 +4,7 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma
     container_name: uptime-kuma
+    restart: unless-stopped
     volumes:
       - ${DOCKER_APP_DATA}/uptime-kuma:/app/data
     network_mode: host
