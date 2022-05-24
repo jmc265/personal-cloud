@@ -1,1 +1,1 @@
-00 23 * * * ${PERSONAL_CLOUD_DIR}/syncthing/copyPhoneMedia.sh && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/syncthing-copy-phone-media
+00 23 * * * ${PERSONAL_CLOUD_DIR}/jupiter/syncthing/copyPhoneMedia.sh && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/syncthing-copy-phone-media

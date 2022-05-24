@@ -1,1 +1,1 @@
-0 3 * * * ${PERSONAL_CLOUD_DIR}/backup/backup.sh
+0 3 * * * ${PERSONAL_CLOUD_DIR}/jupiter/backup/backup.sh

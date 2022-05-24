@@ -18,17 +18,11 @@ do_backup() {
         --links
 }
 
-echo "BackupCloud.sh - start" >> ${PERSONAL_CLOUD_DIR}/backup-log
 # Start Healthcheck
-curl -m 30 --retry 5 https://${HEALTHCHECKS_URL}/nightly-backup-azure/start
+curl -m 30 --retry 5 https://${HEALTHCHECKS_URL}/nightly-backup-azure/Start
 
-echo "BackupCloud.sh - start do_backup" >> ${PERSONAL_CLOUD_DIR}/backup-log
 # Do backup
 BACKUP_OUTPUT=$(do_backup 2>&1)
 
-echo "BackupCloud.sh - end do_backup" >> ${PERSONAL_CLOUD_DIR}/backup-log
-
 # Complete HealthCheck
 curl -fsS -m 30 --retry 10 --retry-delay 60 --data-raw "$BACKUP_OUTPUT" https://${HEALTHCHECKS_URL}/nightly-backup-azure/$?
-
-echo "BackupCloud.sh - end" >> ${PERSONAL_CLOUD_DIR}/backup-log

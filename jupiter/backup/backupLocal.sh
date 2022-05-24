@@ -6,14 +6,11 @@ BORG_DEST_DIR="${SECONDARY_STORAGE}/backups/borg"
 
 do_backup() {
     set -ex
-    pushd ${PERSONAL_CLOUD_DIR}
+    pushd ${PERSONAL_CLOUD_DIR}/jupiter
 
-    echo "BackupLocal.sh - start stop-all" >> ${PERSONAL_CLOUD_DIR}/backup-log
     # Stop all running docker containers
     ./stop-all.sh
-    echo "BackupLocal.sh - end stop-all" >> ${PERSONAL_CLOUD_DIR}/backup-log
 
-    echo "BackupLocal.sh - start rclone" >> ${PERSONAL_CLOUD_DIR}/backup-log
     # Copy over files from primary to secondary
     # Can add `-v` to sync command, but then $BACKOUT_OUTPUT is too large and curl errors with "argument list too long"
     docker run \
@@ -26,14 +23,10 @@ do_backup() {
         rclone/rclone \
         sync /src /dest --stats 0 --exclude "/downloads/**" --exclude "/.deleted/**" --exclude "/lost+found/**" 2>&1 \
         --links
-    echo "BackupLocal.sh - end rclone" >> ${PERSONAL_CLOUD_DIR}/backup-log
 
-    echo "BackupLocal.sh - start start-all" >> ${PERSONAL_CLOUD_DIR}/backup-log
     # Restart all docker containers
     ./start-all.sh
-    echo "BackupLocal.sh - end start-all" >> ${PERSONAL_CLOUD_DIR}/backup-log
 
-    echo "BackupLocal.sh - start borg" >> ${PERSONAL_CLOUD_DIR}/backup-log
     # Do Borg backup with prune
     # Add `--list --filter=AMEC` to COMPRESSION to see files
     # -e BORG_SKIP_CHECK=true \
@@ -53,24 +46,15 @@ do_backup() {
         -v $RCLONE_DEST_DIR:/borg/data:ro \
         --name borg-local-create \
         pschiffe/borg
-    echo "BackupLocal.sh - end borg" >> ${PERSONAL_CLOUD_DIR}/backup-log
 
     popd
 }
 
-echo "BackupLocal.sh - start" >> ${PERSONAL_CLOUD_DIR}/backup-log
 # Start Healthcheck
 curl -m 30 --retry 5 https://${HEALTHCHECKS_URL}/nightly-backup-local/start
 
-echo "BackupLocal.sh - start do_backup" >> ${PERSONAL_CLOUD_DIR}/backup-log
 # Do backup
 BACKUP_OUTPUT=$(do_backup 2>&1)
 
-echo "$BACKUP_OUTPUT" >> ${PERSONAL_CLOUD_DIR}/backup-log
-
-echo "BackupLocal.sh - end do_backup" >> ${PERSONAL_CLOUD_DIR}/backup-log
-
 # Complete HealthCheck
 curl -fsS -m 30 --retry 10 --retry-delay 60 --data-raw "$BACKUP_OUTPUT" https://${HEALTHCHECKS_URL}/nightly-backup-local/$?
-
-echo "BackupLocal.sh - end" >> ${PERSONAL_CLOUD_DIR}/backup-log
