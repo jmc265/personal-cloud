@@ -13,7 +13,7 @@ module "container-server" {
   files = [
     {
       filename = "docker-compose.yaml"
-      content  = filebase64("${path.module}/pluto/docker-compose.yaml")
+      content  = filebase64("${path.module}/../pluto/docker-compose.yaml")
     }
   ]
   env = {
