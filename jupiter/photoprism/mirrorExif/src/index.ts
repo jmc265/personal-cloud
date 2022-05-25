@@ -36,11 +36,12 @@ async function getImageDescriptionUpdates(): Promise<Photo[]> {
         .filter(line => !line.startsWith("+--"))
         .filter(line => line.trim().length > 0)
         .map(line => {
+console.log(line)
             const values = line.split("|");
             return {
                 filePath: values[1].trim().replace("photos/", PHOTO_BASE_DIR),
                 description: values[2].trim(),
-                isFavourite: values[3] === "1"
+                isFavourite: values[3].trim() === "1"
             }
         });
 }
