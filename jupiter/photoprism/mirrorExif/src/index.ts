@@ -9,6 +9,12 @@ import exiftoolBin from "dist-exiftool";
 const SQL_PASSWORD = process.env.SQL_PASSWORD;
 const PHOTO_BASE_DIR = `${process.env.PRIMARY_STORAGE}/media/home/`
 
+interface Photo {
+    filePath: string;
+    description: string;
+    isFavourite: boolean;
+}
+
 async function executeSql(sql: string): Promise<string> {
     const dockerCommand = `docker exec mariadb mariadb --user root -p${SQL_PASSWORD} -D photoprism -N -t -e "${sql}"`;
     try {
@@ -23,8 +29,8 @@ async function executeSql(sql: string): Promise<string> {
     }
 }
 
-async function getImageDescriptionUpdates(): Promise<{fileName: string, photoDescription: string}[]> {
-    const sql = `SELECT files.file_name, photos.photo_description FROM photos JOIN files ON files.photo_id = photos.id WHERE photos.description_src='manual';`
+async function getImageDescriptionUpdates(): Promise<Photo[]> {
+    const sql = `SELECT files.file_name, photos.photo_description, photos.photo_favorite FROM photos JOIN files ON files.photo_id = photos.id WHERE photos.description_src='manual' OR photos.photo_favorite=1;`
     const sqlResponse: string = await executeSql(sql);
     return sqlResponse.split("\n")
         .filter(line => !line.startsWith("+--"))
@@ -32,27 +38,39 @@ async function getImageDescriptionUpdates(): Promise<{fileName: string, photoDes
         .map(line => {
             const values = line.split("|");
             return {
-                fileName: values[1].trim(),
-                photoDescription: values[2].trim()
+                filePath: values[1].trim().replace("photos/", PHOTO_BASE_DIR),
+                description: values[2].trim(),
+                isFavourite: values[3] === "1"
             }
         });
 }
 
-async function updateFileExifData(fileName: string, photoDescription: string) {
-    const fileNameOnDisk = fileName.replace("photos/", PHOTO_BASE_DIR);
+async function updateFileExifData(photo: Photo) {
     let ep;
     try {
         // Check file exists and is writeable
-        await promisify(fs.access)(fileNameOnDisk, fs.constants.F_OK | fs.constants.W_OK);
+        await promisify(fs.access)(photo.filePath, fs.constants.F_OK | fs.constants.W_OK);
+
         // Alter exif data
         ep = new exiftool.ExiftoolProcess(exiftoolBin);
         await ep.open();
-        const res = await ep.writeMetadata(fileNameOnDisk, {
-            ImageDescription: photoDescription
+        const res = await ep.writeMetadata(photo.filePath, {
+            ImageDescription: photo.description,
+            Rating: photo.isFavourite ? 5 : null
         }, ['overwrite_original']);
-        console.log(`Write metadata: ${JSON.stringify(res)}`);
+
+        // Check for success
+        // Yes, "res.error" contains the success message...
+        if (res.error !== "1 image files updated") {
+            throw res.error;
+        }
+        console.log(`Updated ${photo.filePath} with description "${photo.description}"`);
     } catch (err: any) {
-        console.error(`${fileNameOnDisk} ${err.code === 'ENOENT' ? 'does not exist' : 'is read-only'}`);
+        if (err.code) {
+            console.error(`Error in updateFileExifData. File: ${photo.filePath} ${err.code === 'ENOENT' ? 'does not exist' : 'is read-only'}`);
+        } else {
+            console.error(`Error in updateFileExifData. File: ${photo.filePath}. Error: ${err}`);
+        }
         throw err;
     } finally {
         if (ep && ep.isOpen) {
@@ -63,7 +81,9 @@ async function updateFileExifData(fileName: string, photoDescription: string) {
 
 async function main() {
     const pendingUpdates = await getImageDescriptionUpdates();
-    await Promise.all(pendingUpdates.map(({fileName, photoDescription}) => updateFileExifData(fileName, photoDescription)));
+    for (const photoUpdate of pendingUpdates) {
+        await updateFileExifData(photoUpdate);
+    }
 }
 
 main();

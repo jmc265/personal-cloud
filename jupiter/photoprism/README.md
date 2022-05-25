@@ -1,3 +1,7 @@
+Index options:
+https://github.com/photoprism/photoprism/blob/develop/internal/commands/index.go
+use --force for full rescan
+
 To get favourites:
 
 ```sql
@@ -14,9 +18,9 @@ docker exec -it mariadb mariadb --user root -p${SQL_PASSWORD} -D photoprism -e "
 
 To get image descriptions:
 ```sql
-select files.file_name, photos.photo_description from photos JOIN files on files.photo_id = photos.id  where photos.description_src="manual";
+select photos.id, files.file_name, photos.photo_description from photos JOIN files on files.photo_id = photos.id  where photos.description_src="manual";
+select photos.id, files.file_name, photos.photo_description, photos.description_src from photos JOIN files on files.photo_id = photos.id where photos.photo_description IS NOT NULL AND photos.photo_description != '';
 ```
-
 
 
 Interative login:
