@@ -36,7 +36,6 @@ async function getImageDescriptionUpdates(): Promise<Photo[]> {
         .filter(line => !line.startsWith("+--"))
         .filter(line => line.trim().length > 0)
         .map(line => {
-console.log(line)
             const values = line.split("|");
             return {
                 filePath: values[1].trim().replace("photos/", PHOTO_BASE_DIR),
@@ -55,10 +54,14 @@ async function updateFileExifData(photo: Photo) {
         // Alter exif data
         ep = new exiftool.ExiftoolProcess(exiftoolBin);
         await ep.open();
-        const res = await ep.writeMetadata(photo.filePath, {
-            ImageDescription: photo.description,
-            Rating: photo.isFavourite ? 5 : null
-        }, ['overwrite_original']);
+        let exifUpdates: any = {};
+        if (photo.description && photo.description.length > 0) {
+            exifUpdates.ImageDescription = photo.description;
+        }
+        if (photo.isFavourite) {
+            exifUpdates.Rating = 5;
+        }
+        const res = await ep.writeMetadata(photo.filePath, exifUpdates, ['preserve']);
 
         // Check for success
         // Yes, "res.error" contains the success message...
