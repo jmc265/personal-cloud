@@ -55,8 +55,8 @@ async function updateFileExifData(fileName: string, photoDescription: string) {
 }
 
 async function main() {
-    const res = await getImageDescriptionUpdates();
-    console.log(res);
+    const pendingUpdates = await getImageDescriptionUpdates();
+    await Promise.all(pendingUpdates.map(({fileName, photoDescription}) => updateFileExifData(fileName, photoDescription)));
 }
 
 main();
