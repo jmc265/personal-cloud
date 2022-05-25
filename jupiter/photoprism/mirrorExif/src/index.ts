@@ -40,17 +40,24 @@ async function getImageDescriptionUpdates(): Promise<{fileName: string, photoDes
 
 async function updateFileExifData(fileName: string, photoDescription: string) {
     const fileNameOnDisk = fileName.replace("photos/", PHOTO_BASE_DIR);
+    let ep;
     try {
         // Check file exists and is writeable
         await promisify(fs.access)(fileNameOnDisk, fs.constants.F_OK | fs.constants.W_OK);
         // Alter exif data
-        const ep = new exiftool.ExiftoolProcess(exiftoolBin);
+        ep = new exiftool.ExiftoolProcess(exiftoolBin);
         await ep.open();
-        const exif = await ep.readMetadata(fileNameOnDisk);
-        console.log(exif);
+        const res = await ep.writeMetadata(fileNameOnDisk, {
+            ImageDescription: photoDescription
+        }, ['overwrite_original']);
+        console.log(`Write metadata: ${res}`);
     } catch (err: any) {
         console.error(`${fileNameOnDisk} ${err.code === 'ENOENT' ? 'does not exist' : 'is read-only'}`);
         throw err;
+    } finally {
+        if (ep && !ep.isOpen) {
+            await ep.close();
+        }
     }
 }
 
