@@ -65,10 +65,10 @@ async function updateFileExifData(photo: Photo) {
 
         // Check for success
         // Yes, "res.error" contains the success message...
-        if (res.error !== "1 image files updated") {
+        if (!(<string>res.error).includes("1 image files updated")) {
             throw res.error;
         }
-        console.log(`Updated ${photo.filePath} with description "${photo.description}"`);
+        console.log(`Updated ${photo.filePath} with ${JSON.stringify(exifUpdates)}`);
     } catch (err: any) {
         if (err.code) {
             console.error(`Error in updateFileExifData. File: ${photo.filePath} ${err.code === 'ENOENT' ? 'does not exist' : 'is read-only'}`);
