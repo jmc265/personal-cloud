@@ -30,7 +30,7 @@ async function executeSql(sql: string): Promise<string> {
 }
 
 async function getImageDescriptionUpdates(): Promise<Photo[]> {
-    const sql = `SELECT files.file_name, photos.photo_description, photos.photo_favorite FROM photos JOIN files ON files.photo_id = photos.id WHERE photos.description_src='manual' OR photos.photo_favorite=1;`
+    const sql = `SELECT files.file_name, photos.photo_description, photos.photo_favorite FROM photos JOIN files ON files.photo_id = photos.id WHERE (photos.description_src='manual' OR photos.photo_favorite=1) AND files.file_root = "/";`
     const sqlResponse: string = await executeSql(sql);
     return sqlResponse.split("\n")
         .filter(line => !line.startsWith("+--"))
