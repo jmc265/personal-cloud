@@ -50,12 +50,12 @@ async function updateFileExifData(fileName: string, photoDescription: string) {
         const res = await ep.writeMetadata(fileNameOnDisk, {
             ImageDescription: photoDescription
         }, ['overwrite_original']);
-        console.log(`Write metadata: ${res}`);
+        console.log(`Write metadata: ${JSON.stringify(res)}`);
     } catch (err: any) {
         console.error(`${fileNameOnDisk} ${err.code === 'ENOENT' ? 'does not exist' : 'is read-only'}`);
         throw err;
     } finally {
-        if (ep && !ep.isOpen) {
+        if (ep && ep.isOpen) {
             await ep.close();
         }
     }
