@@ -23,10 +23,11 @@ async function getImageDescriptionUpdates(): Promise<{file_name: string, photo_d
     return sqlResponse.split("\n")
         .filter(line => !line.startsWith("+--"))
         .map(line => {
+console.log(line);
             const values = line.split("|");
             return {
-                file_name: values[0],
-                photo_description: values[1]
+                file_name: values[1],
+                photo_description: values[2]
             }   
         });
 }
