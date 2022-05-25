@@ -18,7 +18,7 @@
       "resolveJsonModule": true,
       "jsx": "react",
       "typeRoots": [
-        "src1/types/declarations",
+        "./src/declarations",
         "./node_modules/@types"
       ],
       "sourceMap": true,

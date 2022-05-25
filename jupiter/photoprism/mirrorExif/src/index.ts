@@ -1,7 +1,9 @@
 import { exec } from "child_process";
 import * as fs from "fs";
 import { promisify } from "util";
+// @ts-ignore
 import * as exiftool from "node-exiftool";
+// @ts-ignore
 import exiftoolBin from "dist-exiftool";
 
 const SQL_PASSWORD = process.env.SQL_PASSWORD;
