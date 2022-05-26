@@ -13,6 +13,7 @@ interface Photo {
     filePath: string;
     description: string;
     isFavourite: boolean;
+    faces: string[];
 }
 
 async function executeSql(sql: string): Promise<string> {
@@ -40,7 +41,8 @@ async function getImageDescriptionUpdates(): Promise<Photo[]> {
             return {
                 filePath: values[1].trim().replace("photos/", PHOTO_BASE_DIR),
                 description: values[2].trim(),
-                isFavourite: values[3].trim() === "1"
+                isFavourite: values[3].trim() === "1",
+                faces: []
             }
         });
 }
@@ -61,6 +63,10 @@ async function updateFileExifData(photo: Photo) {
         if (photo.isFavourite) {
             exifUpdates.Rating = 5;
         }
+        if (photo.faces && photo.faces.length > 0) {
+            exifUpdates.PersonInImage = photo.faces;
+        }
+
         const res = await ep.writeMetadata(photo.filePath, exifUpdates, ['preserve']);
 
         // Check for success
