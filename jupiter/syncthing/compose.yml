@@ -15,7 +15,6 @@ services:
     volumes:
       - ${DOCKER_APP_DATA}/syncthing:/config
       - ${PRIMARY_STORAGE}:/mnt/primary:z
-      - ${SECONDARY_STORAGE}:/mnt/secondary:z
     restart: unless-stopped
     labels:
       - traefik.enable=true

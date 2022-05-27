@@ -1,8 +1,8 @@
 #!/bin/bash
 # Environment variables
 SRC_DIR=${PRIMARY_STORAGE}
-RCLONE_DEST_DIR="${SECONDARY_STORAGE}/backups/rclone"
-BORG_DEST_DIR="${SECONDARY_STORAGE}/backups/borg"
+RCLONE_DEST_DIR="${PRIMARY_BACKUP_STORAGE}/backups/rclone"
+BORG_DEST_DIR="${PRIMARY_BACKUP_STORAGE}/backups/borg"
 
 do_backup() {
     set -ex

@@ -8,7 +8,7 @@ Used to create snapshots of a source directory. The snapshots are pruned
 ## List all backups in the repo:
 
 ```shell
-BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
+BORG_REPO_DIR="${PRIMARY_BACKUP_STORAGE}/backups/borg"
 docker run \
   --rm \
   -e BORG_REPO=/borg/repo \
@@ -23,8 +23,8 @@ docker run \
 ## Extract a backup:
 
 ```shell
-BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
-EXTRACT_DEST="${SECONDARY_STORAGE}/backups/restore"
+BORG_REPO_DIR="${PRIMARY_BACKUP_STORAGE}/backups/borg"
+EXTRACT_DEST="${PRIMARY_BACKUP_STORAGE}/backups/restore"
 ARCHIVE_NAME="983c0f240eae_2022-05-05"
 docker run \
   --rm \
@@ -41,7 +41,7 @@ docker run \
 
 ## Export the repo key:
 ```shell
-BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
+BORG_REPO_DIR="${PRIMARY_BACKUP_STORAGE}/backups/borg"
 docker run \
   --rm \
   -e BORG_REPO=/borg/repo \
@@ -57,7 +57,7 @@ sudo cat ./borg_exported_key
 
 ## Break the lock
 ```shell
-BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
+BORG_REPO_DIR="${PRIMARY_BACKUP_STORAGE}/backups/borg"
 docker run \
   --rm \
   -e BORG_REPO=/borg/repo \

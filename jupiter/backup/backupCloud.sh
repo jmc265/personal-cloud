@@ -2,7 +2,7 @@
 set -ex
 
 # Environments
-BORG_REPO_DIR="${SECONDARY_STORAGE}/backups/borg"
+BORG_REPO_DIR="${PRIMARY_BACKUP_STORAGE}/backups/borg"
 RCLONE_DEST="azure:jcx-jupiter-backup"
 
 do_backup() {
