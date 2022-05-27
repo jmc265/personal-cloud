@@ -24,4 +24,5 @@ services:
     volumes:
       - ${PRIMARY_STORAGE}:/mnt/primary:z
       - ${SECONDARY_STORAGE}:/mnt/secondary:z
-    command: '-s "primary;/mnt/primary;yes;no;yes;all;all;all" -s "secondary;/mnt/secondary;yes;no;yes;all;all;all" -u "${ADMIN_USERNAME};${ADMIN_PASSWORD}" -g "inherit permissions = yes" -g "directory mask = 02775" -g "force directory mode = 02775"'
+      - ${PRIMARY_BACKUP_STORAGE}:/mnt/primary-backup:z
+    command: '-s "primary;/mnt/primary;yes;no;yes;all;all;all" -s "secondary;/mnt/secondary;yes;no;yes;all;all;all" -s "primary-backup;/mnt/primary-backup;yes;no;yes;all;all;all" -u "${ADMIN_USERNAME};${ADMIN_PASSWORD}" -g "inherit permissions = yes" -g "directory mask = 02775" -g "force directory mode = 02775"'
