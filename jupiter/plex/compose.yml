@@ -11,10 +11,10 @@ services:
       - VERSION=docker
     volumes:
       - ${DOCKER_APP_DATA}/plex:/config
-      - ${PRIMARY_STORAGE}/downloads/media/tv:/tv
-      - ${PRIMARY_STORAGE}/downloads/media/movies:/movies
-      - ${PRIMARY_STORAGE}/downloads/media/music:/music
-      - ${PRIMARY_STORAGE}/media:/media
+      - ${SECONDARY_STORAGE}/downloads/media/tv:/tv
+      - ${SECONDARY_STORAGE}/downloads/media/movies:/movies
+      - ${SECONDARY_STORAGE}/downloads/media/music:/music
+      - ${SECONDARY_STORAGE}/media:/media
     restart: unless-stopped
     labels:
       - traefik.enable=true

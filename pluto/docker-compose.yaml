@@ -7,13 +7,14 @@ services:
     restart: unless-stopped
     volumes:
       - ${DOCKER_APP_DATA}/uptime-kuma:/app/data
+    ports:
+      - 3001:3001
     labels:
       - traefik.enable=true
       - traefik.http.routers.uptime.rule=Host(`uptime.${INET_DOMAIN}`)
       - traefik.http.routers.uptime.entrypoints=websecure
       - traefik.http.routers.uptime.tls=true
       - traefik.http.routers.uptime.tls.certresolver=letsencrypt
-      - traefik.http.services.uptime.loadBalancer.server.port=3001
 
   healthchecks:
     image: linuxserver/healthchecks
@@ -27,15 +28,39 @@ services:
       - APPRISE_ENABLED=True
       - PING_BODY_LIMIT=100000
       - DEBUG=False
+    restart: unless-stopped
     volumes:
       - ${DOCKER_APP_DATA}/healthchecks:/config
-    restart: unless-stopped
+    ports:
+      - 8000:8000
     labels:
       - traefik.enable=true
       - traefik.http.routers.healthchecks.rule=Host(`healthchecks.${INET_DOMAIN}`)
       - traefik.http.routers.healthchecks.entrypoints=websecure
       - traefik.http.routers.healthchecks.tls=true
       - traefik.http.routers.healthchecks.tls.certresolver=letsencrypt
+
+  syncthing:
+    container_name: syncthing
+    image: linuxserver/syncthing
+    environment:
+      - TZ=Europe/London
+    ports:
+      - 8384:8384
+      - 22000:22000
+      - 21027:21027/udp
+    volumes:
+      - ${DOCKER_APP_DATA}/syncthing:/config
+      - ${DOCKER_APP_DATA}/data:/data
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.syncthing.rule=Host(`sync.${INET_DOMAIN}`)
+      - traefik.http.routers.syncthing.entrypoints=websecure
+      - traefik.http.routers.syncthing.tls=true
+      - traefik.http.routers.syncthing.tls.certresolver=letsencrypt
+      - traefik.http.routers.syncthing.service=syncthing
+      - traefik.http.services.syncthing.loadbalancer.server.port=8384
 
 networks:
   default:
