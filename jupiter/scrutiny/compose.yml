@@ -19,3 +19,8 @@ services:
       - "/dev/sdb"
       - "/dev/sdc"
       - "/dev/sdd"
+    labels:
+      - flame.type=app
+      - flame.name=Scrutiny
+      - flame.url=http://${LOCAL_DOMAIN}:3765
+      - flame.icon=harddisk
