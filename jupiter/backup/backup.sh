@@ -42,7 +42,7 @@ do_backup() {
 }
 
 # Start Healthcheck
-curl -m 30 --retry 5 https://${HEALTHCHECKS_URL}/nightly-backup-local/start
+curl -m 30 --retry 5 https://${HEALTHCHECKS_URL}/nightly-backup/start
 
 # Stop all running docker containers
 pushd ${PERSONAL_CLOUD_DIR}/jupiter
@@ -57,4 +57,4 @@ BACKUP_EXIT_CODE=$?
 popd
 
 # Complete HealthCheck
-curl -fsS -m 30 --retry 10 --retry-delay 60 --data-raw "$BACKUP_OUTPUT" https://${HEALTHCHECKS_URL}/nightly-backup-local/$BACKUP_EXIT_CODE
+curl -fsS -m 30 --retry 10 --retry-delay 60 --data-raw "$BACKUP_OUTPUT" https://${HEALTHCHECKS_URL}/nightly-backup/$BACKUP_EXIT_CODE
