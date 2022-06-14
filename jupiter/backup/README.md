@@ -20,18 +20,55 @@ docker run \
   pschiffe/borg
 ```
 
+## List all files in a backup:
+
+```shell
+BORG_REPO_DIR="${PRIMARY_BACKUP_STORAGE}/backups/borg"
+ARCHIVE_NAME="43bd2f53a177_2022-06-09"
+docker run \
+  --rm \
+  -e BORG_REPO=/borg/repo \
+  -e BORG_PASSPHRASE=$BORG_REPO_PASSWORD \
+  -e BORG_PARAMS="list /borg/repo::${ARCHIVE_NAME}" \
+  -v ${DOCKER_APP_DATA}/borg/config:/root \
+  -v $BORG_REPO_DIR:/borg/repo \
+  --name borg-backup \
+  pschiffe/borg
+```
+
 ## Extract a backup:
 
 ```shell
 BORG_REPO_DIR="${PRIMARY_BACKUP_STORAGE}/backups/borg"
 EXTRACT_DEST="${PRIMARY_BACKUP_STORAGE}/backups/restore"
-ARCHIVE_NAME="983c0f240eae_2022-05-05"
+ARCHIVE_NAME="43bd2f53a177_2022-06-09"
 docker run \
   --rm \
   -e BORG_REPO=/borg/repo \
   -e ARCHIVE=$ARCHIVE_NAME \
   -e BORG_PASSPHRASE=$BORG_REPO_PASSWORD \
   -e EXTRACT_TO=/borg/restore \
+  -v ${DOCKER_APP_DATA}/borg/config:/root \
+  -v $EXTRACT_DEST:/borg/restore \
+  -v $BORG_REPO_DIR:/borg/repo \
+  --name borg-backup \
+  pschiffe/borg
+```
+
+## Extract a single file from backup:
+
+```shell
+BORG_REPO_DIR="${PRIMARY_BACKUP_STORAGE}/backups/borg"
+EXTRACT_DEST="${PRIMARY_BACKUP_STORAGE}/backups/restore"
+ARCHIVE_NAME="43bd2f53a177_2022-06-09"
+FILE_NAME="borg/src/primary/workspace/personal-cloud/jupiter/home-tracker/cal.ics"
+docker run \
+  --rm \
+  -e BORG_REPO=/borg/repo \
+  -e ARCHIVE=$ARCHIVE_NAME \
+  -e BORG_PASSPHRASE=$BORG_REPO_PASSWORD \
+  -e EXTRACT_TO=/borg/restore \
+  -e EXTRACT_WHAT=$FILE_NAME \
   -v ${DOCKER_APP_DATA}/borg/config:/root \
   -v $EXTRACT_DEST:/borg/restore \
   -v $BORG_REPO_DIR:/borg/repo \
