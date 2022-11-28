@@ -7,6 +7,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${DOCKER_APP_DATA}/uptime-kuma:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
     network_mode: host
     labels:
       - flame.type=app

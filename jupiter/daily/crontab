@@ -1,0 +1,1 @@
+1 0 * * * cd ${PRIMARY_STORAGE}/docs/Notes/.app/ && ./make-daily-note.sh

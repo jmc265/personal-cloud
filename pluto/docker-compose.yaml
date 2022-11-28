@@ -40,6 +40,22 @@ services:
       - traefik.http.routers.healthchecks.tls=true
       - traefik.http.routers.healthchecks.tls.certresolver=letsencrypt
 
+  newrelic-agent:
+    image: newrelic/infrastructure:latest
+    container_name: newrelic-agent
+    environment:
+      - NRIA_LICENSE_KEY=${NRIA_LICENSE_KEY}
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+    volumes:
+      - /:/host:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    privileged: true
+    network_mode: host
+    pid: host 
+
+
   syncthing:
     container_name: syncthing
     image: linuxserver/syncthing
