@@ -11,15 +11,6 @@ resource "azurerm_storage_account" "storage" {
   access_tier                     = "Cool"
   allow_nested_items_to_be_public = false
 
-  blob_properties {
-    delete_retention_policy {
-      days = 30
-    }
-    container_delete_retention_policy {
-      days = 30
-    }
-  }
-
   lifecycle {
     prevent_destroy = true
   }
@@ -33,15 +24,6 @@ resource "azurerm_storage_account" "backup" {
   account_replication_type        = "ZRS"
   access_tier                     = "Cool"
   allow_nested_items_to_be_public = false
-
-  blob_properties {
-    delete_retention_policy {
-      days = 30
-    }
-    container_delete_retention_policy {
-      days = 30
-    }
-  }
 
   lifecycle {
     prevent_destroy = true

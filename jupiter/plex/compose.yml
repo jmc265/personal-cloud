@@ -14,7 +14,7 @@ services:
       - ${SECONDARY_STORAGE}/downloads/media/tv:/tv
       - ${SECONDARY_STORAGE}/downloads/media/movies:/movies
       - ${SECONDARY_STORAGE}/downloads/media/music:/music
-      - ${SECONDARY_STORAGE}/media:/media
+      - ${PRIMARY_STORAGE}/media:/media
     restart: unless-stopped
     labels:
       - traefik.enable=true
