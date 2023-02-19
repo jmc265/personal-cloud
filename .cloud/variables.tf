@@ -36,6 +36,18 @@ variable "gcp_billing_account_id" {
   description = "GCP billing account ID"
 }
 
+## ---- NR
+
+variable "newrelic_account_id" {
+  type = string
+  description = "New Relic account ID"
+}
+
+variable "newrelic_api_key" {
+  type = string
+  description = "New Relic api key"
+}
+
 ## ---- General
 
 variable "root_domain" {
