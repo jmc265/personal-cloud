@@ -17,6 +17,10 @@ terraform {
       source = "hashicorp/google"
       version = ">= 4.21.0"
     }
+    newrelic = {
+      source  = "newrelic/newrelic"
+      version = "~> 3.14"
+    }
   }
 
   required_version = ">= 0.14.9"
@@ -36,6 +40,11 @@ provider "google" {
   zone    = "${var.gcp_region}-b"
 }
 
+provider "newrelic" {
+  account_id = var.newrelic_account_id
+  api_key    = var.newrelic_api_key
+  region     = "EU"
+}
 
 data "azurerm_subscription" "current" {}
 
