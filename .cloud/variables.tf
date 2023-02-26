@@ -48,6 +48,11 @@ variable "newrelic_api_key" {
   description = "New Relic api key"
 }
 
+variable "newrelic_license_key" {
+  type = string
+  description = "New Relic license key"
+}
+
 ## ---- General
 
 variable "root_domain" {
