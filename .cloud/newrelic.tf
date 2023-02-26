@@ -1,3 +1,5 @@
+# https://github.com/newrelic/terraform-provider-newrelic/blob/main/examples/cloud-integrations-azure.tf
+
 resource "newrelic_cloud_azure_link_account" "nr_account_link"{
   name            = "${var.short_prefix}linknr"
   account_id      = var.newrelic_account_id
@@ -8,7 +10,7 @@ resource "newrelic_cloud_azure_link_account" "nr_account_link"{
 }
 
 resource "newrelic_cloud_azure_integrations" "foo" {
-    account_id        = var.NEW_RELIC_ACCOUNT_ID
+    account_id        = var.newrelic_account_id
     linked_account_id = newrelic_cloud_azure_link_account.nr_account_link.id
 
     cost_management {}
