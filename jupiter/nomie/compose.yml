@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+  nomie6:
+    container_name: nomie
+    image: ghcr.io/qcasey/nomie6-oss:master
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.nomie.rule=Host(`nomie.${INET_DOMAIN}`)
+      - traefik.http.routers.nomie.tls=true
+      - traefik.http.routers.nomie.tls.certresolver=letsencrypt
+      - flame.type=app
+      - flame.name=Nomie
+      - flame.url=https://nomie.${INET_DOMAIN}
+      - flame.icon=food
+
+  couchdb:
+    container_name: couchdb
+    image: couchdb:3
+    restart: unless-stopped
+    ports:
+      - 5984:5984
+    environment:
+      - COUCHDB_USER=nomie
+      - COUCHDB_PASSWORD=${SQL_PASSWORD}
+    volumes:
+      - ${DOCKER_APP_DATA}/nomie/db:/opt/couchdb/data
+      - ${PERSONAL_CLOUD_DIR}/jupiter/nomie/couchdb.ini:/opt/couchdb/etc/local.d/docker.ini
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.nomie-db.rule=Host(`nomie-db.${INET_DOMAIN}`)
+      - traefik.http.routers.nomie-db.tls=true
+      - traefik.http.routers.nomie-db.tls.certresolver=letsencrypt
+      - traefik.http.services.couchdb.loadbalancer.server.port=5984

@@ -6,7 +6,7 @@ const path = require('path');
 const SQL_PASSWORD = process.env.SQL_PASSWORD;
 const DOCKER_APP_DATA = process.env.DOCKER_APP_DATA;
 const PRIMARY_STORAGE = process.env.PRIMARY_STORAGE;
-const PHOTO_BASE_DIR = `${process.env.PRIMARY_STORAGE}/media/home`
+const PHOTO_BASE_DIR = `${process.env.PRIMARY_STORAGE}/media/home`;
 const PHOTO_SIDECAR_BASE_DIR = `${DOCKER_APP_DATA}/photoprism/sidecar/photos`;
 const UPLOAD_BASE_DIR = `${DOCKER_APP_DATA}/wordpress/html/wp-content/uploads`;
 const LAST_SYNC_FILE = `${UPLOAD_BASE_DIR}/.last_sync`;
@@ -30,7 +30,8 @@ const files = sqlResponse.split("\n")
         .map(file => file.trim())
         .map(file => file.replace('photos/', ''))
         .map(file => path.parse(file))
-        .filter(file => file.ext !== ".ARW");
+        .filter(file => file.ext !== ".ARW")
+        .filter(file => file.ext !== ".pp3");
 
 // Import files
 for (const file of files) {
