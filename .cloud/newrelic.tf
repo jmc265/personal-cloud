@@ -9,7 +9,7 @@ resource "newrelic_cloud_azure_link_account" "nr_account_link"{
 
 resource "newrelic_cloud_azure_integrations" "foo" {
     account_id        = var.NEW_RELIC_ACCOUNT_ID
-    linked_account_id = newrelic_cloud_azure_link_account.newrelic_cloud_azure_integration.id
+    linked_account_id = newrelic_cloud_azure_link_account.nr_account_link.id
 
     cost_management {}
     front_door {}
