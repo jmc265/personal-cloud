@@ -9,7 +9,14 @@ services:
     user: 2001:1000
     volumes:
       - /var/run/dbus:/var/run/dbus
+      - /dev/bus/usb/001/001:/dev/bus/usb/001/001
+      - /dev/bus/usb/001/002:/dev/bus/usb/001/002
       - /dev/bus/usb/001/003:/dev/bus/usb/001/003
+      - /dev/bus/usb/001/004:/dev/bus/usb/001/004
+      - /dev/bus/usb/002/001:/dev/bus/usb/002/001
+      - /dev/bus/usb/002/002:/dev/bus/usb/002/002
+      - /dev/bus/usb/002/003:/dev/bus/usb/002/003
+      - /dev/bus/usb/002/003:/dev/bus/usb/002/004
       - ${PRIMARY_STORAGE}/docs/scan-output:/app/data/output
     privileged: true
     restart: unless-stopped
