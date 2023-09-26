@@ -11,7 +11,6 @@ services:
       ADMIN_EMAIL: ${ADMIN_EMAIL}
     volumes:
       - ${PERSONAL_CLOUD_DIR}/jupiter/traefik/traefik.yml:/etc/traefik/traefik.yml
-      - ${PERSONAL_CLOUD_DIR}/jupiter/traefik/homeassistant.traefik.yml:/etc/traefik/homeassistant.traefik.yml
       - ${DOCKER_APP_DATA}/traefik/letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
     labels:

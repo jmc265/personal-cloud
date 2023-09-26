@@ -17,14 +17,7 @@ services:
       - ${PRIMARY_STORAGE}:/mnt/primary:z
     restart: unless-stopped
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.syncthing.entrypoints=websecure
-      - traefik.http.routers.syncthing.rule=Host(`sync.${INET_DOMAIN}`)
-      - traefik.http.routers.syncthing.tls=true
-      - traefik.http.routers.syncthing.tls.certresolver=letsencrypt
-      - traefik.http.routers.syncthing.service=syncthing
-      - traefik.http.services.syncthing.loadbalancer.server.port=8384
       - flame.type=app
       - flame.name=Syncthing
-      - flame.url=https://sync.${INET_DOMAIN}
+      - flame.url=http://${LOCAL_DOMAIN}:8384
       - flame.icon=cloud-sync

@@ -30,7 +30,7 @@ services:
       PHOTOPRISM_DATABASE_NAME: "photoprism"
       PHOTOPRISM_DATABASE_USER: "photoprism"
       PHOTOPRISM_DATABASE_PASSWORD: ${SQL_PASSWORD}
-      PHOTOPRISM_SITE_URL: "https://photos.${INET_DOMAIN}"
+      PHOTOPRISM_SITE_URL: "http://${LOCAL_DOMAIN}:2342"
       PHOTOPRISM_SITE_TITLE: "Photos"
       PHOTOPRISM_SITE_CAPTION: ""
       PHOTOPRISM_SITE_DESCRIPTION: ""
@@ -41,13 +41,9 @@ services:
       - ${PRIMARY_STORAGE}/media/home:/photoprism/originals/photos:ro
       - ${DOCKER_APP_DATA}/photoprism:/photoprism/storage
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.photoprism.rule=Host(`photos.${INET_DOMAIN}`)
-      - traefik.http.routers.photoprism.tls=true
-      - traefik.http.routers.photoprism.tls.certresolver=letsencrypt
       - flame.type=app
       - flame.name=Photoprism
-      - flame.url=https://photos.${INET_DOMAIN}
+      - flame.url=http://${LOCAL_DOMAIN}:2342
       - flame.icon=camera
 
   mariadb:

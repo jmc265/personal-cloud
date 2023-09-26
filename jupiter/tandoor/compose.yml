@@ -45,7 +45,7 @@ services:
       - traefik.http.routers.recipes.tls.certresolver=letsencrypt
       - flame.type=app
       - flame.name=Tandoor
-      - flame.url=https://recipes.${INET_DOMAIN}
+      - flame.url=http://${LOCAL_DOMAIN}:4001
       - flame.icon=food
     depends_on:
       - web_recipes

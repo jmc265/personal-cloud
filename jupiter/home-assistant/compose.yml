@@ -20,5 +20,5 @@ services:
     labels:
       - flame.type=app
       - flame.name=Home Assistant
-      - flame.url=https://homeassistant.${INET_DOMAIN}
+      - flame.url=http://${LOCAL_DOMAIN}:8123
       - flame.icon=home

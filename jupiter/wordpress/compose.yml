@@ -15,15 +15,9 @@ services:
     volumes:
       - ${DOCKER_APP_DATA}/wordpress/html:/var/www/html
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.story.rule=Host(`story.${INET_DOMAIN}`)
-      - traefik.http.routers.story.tls=true
-      - traefik.http.routers.story.tls.certresolver=letsencrypt
-      - traefik.http.routers.story.middlewares=story-auth
-      - "traefik.http.middlewares.story-auth.basicauth.users=apollo:${HTTP_PASSWORD}"
       - flame.type=app
       - flame.name=Our Story
-      - flame.url=https://story.${INET_DOMAIN}
+      - flame.url=http://${LOCAL_DOMAIN}:6543
       - flame.icon=human-male-female-child
 
   wordpress-db:

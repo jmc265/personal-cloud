@@ -1,8 +1,6 @@
 providers:
   docker:
     exposedByDefault: false
-  file:
-    filename: /etc/traefik/homeassistant.traefik.yml
 
 entryPoints:
   web:
