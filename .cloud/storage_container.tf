@@ -58,3 +58,20 @@ resource "azurerm_storage_management_policy" "em_wedding_policy" {
     }
   }
 }
+
+resource "azurerm_storage_management_policy" "backup_lifecycle_policy" {
+  storage_account_id = azurerm_storage_account.backup.id  
+  
+  rule {
+    name = "${var.short_prefix}backuptocold"
+    enabled = true
+    filters {
+      blob_types   = ["blockBlob"]
+    }
+    actions {
+      base_blob {
+        tier_to_cold_after_days_since_modification_greater_than = 30
+      }
+    }
+  }
+}
