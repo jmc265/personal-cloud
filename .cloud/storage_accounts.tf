@@ -8,8 +8,9 @@ resource "azurerm_storage_account" "storage" {
   location                        = azurerm_resource_group.personalcloud.location
   account_tier                    = "Standard"
   account_replication_type        = "LRS"
-  access_tier                     = "Cool"
+  access_tier                     = "Cold"
   allow_nested_items_to_be_public = false
+  min_tls_version                 = "TLS1_2"
 
   lifecycle {
     prevent_destroy = true
@@ -22,8 +23,9 @@ resource "azurerm_storage_account" "backup" {
   location                        = azurerm_resource_group.personalcloud.location
   account_tier                    = "Standard"
   account_replication_type        = "ZRS"
-  access_tier                     = "Cool"
+  access_tier                     = "Cold"
   allow_nested_items_to_be_public = false
+  min_tls_version                 = "TLS1_2"
 
   lifecycle {
     prevent_destroy = true
