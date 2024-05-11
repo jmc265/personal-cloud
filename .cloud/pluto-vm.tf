@@ -79,7 +79,7 @@ resource "google_compute_instance" "pluto" {
 
 data "google_compute_image" "cos" {
   project = "cos-cloud"
-  family  = "cos-97-lts"
+  family  = "cos-101-lts"
 }
 
 /* Disk --------------------------------------------------------------------- */
