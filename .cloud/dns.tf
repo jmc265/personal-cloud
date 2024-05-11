@@ -5,6 +5,7 @@
 
 data "azurerm_dns_zone" "root" {
   name                = var.root_domain
+  resource_group_name = "jeeb-uk"
 }
 
 # This will act as my DDNS record
