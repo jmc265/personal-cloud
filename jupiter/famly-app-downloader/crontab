@@ -1,0 +1,1 @@
+1 0 * * * cd ${WORKSPACE_DIR}/personal-cloud/jupiter/famly-app-downloader && node famly.js && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/download-nursery-photos

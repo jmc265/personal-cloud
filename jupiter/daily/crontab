@@ -1,4 +1,2 @@
 1 0 * * * cd ${PRIMARY_STORAGE}/docs/Notes/.app/ && ./make-daily-note.sh
-1 0 * * * cd ${WORKSPACE_DIR}/bright-family && node index.js && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/download-nursery-photos
-0 */4 * * * cd ${WORKSPACE_DIR}/zoopla-to-trello && node index.js && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/zoopla-house-search
 0 */4 * * * cd ${WORKSPACE_DIR}/trello-to-markdown && node index.js && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/trello-to-markdown

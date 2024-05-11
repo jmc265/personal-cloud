@@ -1,0 +1,44 @@
+{
+  "name": "node-exiftool",
+  "version": "2.3.0",
+  "description": "A Node.js interface to exiftool command-line application.",
+  "main": "src/index.js",
+  "files": [
+    "src/"
+  ],
+  "scripts": {
+    "test": "cross-env ZOROASTER_TIMEOUT=10000 zoroaster test/spec",
+    "test-watch": "zoroaster test/spec --watch",
+    "bench": "node benchmark/run",
+    "callback-example": "LOCAL=1 node examples/callback examples/28.jpg",
+    "write-example": "node examples/write_metadata/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sobesednik/node-exiftool.git"
+  },
+  "keywords": [
+    "metadata",
+    "exiftool",
+    "IPTC",
+    "XMP"
+  ],
+  "author": "Anton <anton@sobesednik.media>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Sobesednik/node-exiftool/issues"
+  },
+  "homepage": "https://github.com/Sobesednik/node-exiftool#readme",
+  "devDependencies": {
+    "cross-env": "5.0.0",
+    "exiftool-context": "1.4.0",
+    "makepromise": "1.0.0",
+    "ps-node": "0.1.6",
+    "zoroaster": "0.4.6"
+  },
+  "dependencies": {
+    "is-stream": "1.1.0",
+    "restream": "1.2.0",
+    "wrote": "0.6.1"
+  }
+}

@@ -1,0 +1,32 @@
+version: "3.4"
+
+services:
+  otrecorder:
+    container_name: OwnTracksRecorder
+    image: owntracks/recorder
+    ports:
+      - 8083:8083
+    environment:
+      - OTR_PORT=0
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKER_APP_DATA}/owntracks/config:/config
+      - ${DOCKER_APP_DATA}/owntracks/store:/store
+    restart: unless-stopped
+
+  otfrontend:
+    container_name: OwnTracksFrontend
+    image: owntracks/frontend
+    ports:
+      - 8084:80
+    volumes:
+      - ${DOCKER_APP_DATA}/owntracks/frontend:/usr/share/nginx/html/config
+    environment:
+      - SERVER_HOST=otrecorder
+      - SERVER_PORT=8083
+    restart: unless-stopped
+    labels:
+      - flame.type=app
+      - flame.name=OwnTracks
+      - flame.url=http://${LOCAL_DOMAIN}:8084
+      - flame.icon=map

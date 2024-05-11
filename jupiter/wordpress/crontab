@@ -1,1 +1,2 @@
 30 23 * * * node ${PERSONAL_CLOUD_DIR}/jupiter/wordpress/sync-favourites.js && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/wordpress-sync-favourites
+00 23 * * * ${PERSONAL_CLOUD_DIR}/jupiter/wordpress/run-to-pdf.sh && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/wordpress-backup

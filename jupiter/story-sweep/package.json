@@ -1,0 +1,23 @@
+{
+  "name": "story-sweep",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node build/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^3.3.1",
+    "isomorphic-fetch": "^3.0.0",
+    "node-fetch": "^2.7.0",
+    "trello": "^0.11.0"
+  },
+  "devDependencies": {
+    "@types/date-fns": "^2.6.0",
+    "@types/node": "^20.11.6",
+    "@types/node-fetch": "^2.6.11"
+  }
+}

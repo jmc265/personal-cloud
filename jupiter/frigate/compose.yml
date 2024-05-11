@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  frigate:
+    container_name: frigate
+    privileged: true
+    restart: unless-stopped
+    image: ghcr.io/blakeblackshear/frigate:stable
+    shm_size: "64mb"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKER_APP_DATA}/frigate/config:/config
+      - ${DOCKER_APP_DATA}/frigate/media:/media/frigate
+      - type: tmpfs
+        target: /tmp/cache
+        tmpfs:
+          size: 1000000000
+    ports:
+      - "5000:5000"
+      - "8554:8554"
+      - "8555:8555/tcp"
+      - "8555:8555/udp"
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+      - /dev/apex_0:/dev/apex_0
+      - /dev/dri/renderD128
+    environment:
+      FRIGATE_RTSP_PASSWORD: ${ADMIN_PASSWORD}
+      S6_CMD_WAIT_FOR_SERVICES_MAXTIME: 0
+    labels:
+      - flame.type=app
+      - flame.name=Frigate
+      - flame.url=http://${LOCAL_DOMAIN}:5000
+      - flame.icon=cctv
