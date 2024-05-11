@@ -52,3 +52,7 @@ resource "azurerm_resource_group" "personalcloud" {
   name     = "james-cx-personalcloud"
   location = "uksouth"
 }
+
+data  "azurerm_resource_group" "jeeb-uk" {
+  name = "jeeb-uk"
+}
