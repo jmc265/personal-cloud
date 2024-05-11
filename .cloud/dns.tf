@@ -1,6 +1,10 @@
-resource "azurerm_dns_zone" "root" {
+# resource "azurerm_dns_zone" "root" {
+#   name                = var.root_domain
+#   resource_group_name = azurerm_resource_group.personalcloud.name
+# }
+
+data "azurerm_dns_zone" "root" {
   name                = var.root_domain
-  resource_group_name = azurerm_resource_group.personalcloud.name
 }
 
 # This will act as my DDNS record
