@@ -39,7 +39,3 @@ resource "azurerm_dns_cname_record" "pluto_wildcard" {
   ttl                 = 300
   record              = azurerm_dns_a_record.pluto.fqdn
 }
-
-output "name_servers" {
-  value = azurerm_dns_zone.root.name_servers
-}
