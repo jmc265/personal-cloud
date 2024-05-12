@@ -6,7 +6,7 @@ services:
     image: weejewel/wg-easy
     environment:
       - PASSWORD=${ADMIN_PASSWORD}
-      - WG_HOST=jupiter.kajam.uk
+      - WG_HOST=jupiter.jeeb.uk
       - WG_DEFAULT_DNS=192.168.1.1
       # - WG_PORT=51820
       # - WG_DEFAULT_ADDRESS=10.8.0.x
