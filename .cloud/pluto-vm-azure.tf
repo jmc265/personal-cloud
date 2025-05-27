@@ -71,14 +71,14 @@ resource "azurerm_virtual_network" "app" {
   name                = "pluto"
   location            = azurerm_resource_group.personalcloud.location
   resource_group_name = azurerm_resource_group.personalcloud.name
-  address_space       = ["10.0.0.0/8"]
+  address_space       = ["10.0.0.0/16"]
 }
 
 resource "azurerm_subnet" "app" {
   name                 = "pluto"
   resource_group_name  = azurerm_resource_group.personalcloud.name
   virtual_network_name = azurerm_virtual_network.app.name
-  address_prefixes = [cidrsubnet(azurerm_virtual_network.app.address_space[0], 16, 1)]
+  address_prefixes = ["10.0.2.0/24"]
 }
 
 resource "azurerm_managed_disk" "disk" {
