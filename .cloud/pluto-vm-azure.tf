@@ -102,7 +102,7 @@ resource "azurerm_linux_virtual_machine" "pluto" {
   resource_group_name = azurerm_resource_group.personalcloud.name
   location            = azurerm_resource_group.personalcloud.location
   size                = "Standard_B2pts_v2"
-  admin_username      = "admin"
+  admin_username      = "apollo"
   network_interface_ids = [
     azurerm_network_interface.app.id,
   ]
