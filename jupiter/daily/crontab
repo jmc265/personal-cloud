@@ -1,2 +1,2 @@
-1 0 * * * cd ${PRIMARY_STORAGE}/docs/Notes/.app/ && ./make-daily-note.sh
-0 */4 * * * cd ${WORKSPACE_DIR}/trello-to-markdown && node index.js && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/trello-to-markdown
+0 6 * * * cd ${WORKSPACE_DIR}/.app/ && ./make-daily-note.sh
+0 */4 * * * cd ${PERSONAL_CLOUD_DIR}/jupiter/trello-to-markdown && node index.js && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/trello-to-markdown
