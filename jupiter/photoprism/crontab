@@ -1,2 +1,0 @@
-30 23 * * * docker exec photoprism photoprism convert && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/photoprism-convert
-00 00 * * * docker exec photoprism photoprism index --cleanup && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/photoprism-index
