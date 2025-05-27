@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  pigallery2:
+    image: bpatrik/pigallery2:edge-debian-buster
+    container_name: pigallery2
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ${DOCKER_APP_DATA}/pigallery2/config:/app/data/config
+      - ${DOCKER_APP_DATA}/pigallery2/tmp:/app/data/tmp
+      - ${DOCKER_APP_DATA}/pigallery2/db:/app/data/db
+      - ${PRIMARY_STORAGE}/media/home:/app/data/images:ro
+    ports:
+      - 1929:80
+    restart: unless-stopped
+    labels:
+      - flame.type=app
+      - flame.name=PiGallery2
+      - flame.url=http://${LOCAL_DOMAIN}:1929
+      - flame.icon=image-album
+
