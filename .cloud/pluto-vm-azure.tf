@@ -49,7 +49,7 @@ resource "azurerm_capacity_reservation" "vm-reservation" {
 resource "azurerm_network_interface" "app" {
   name                = "pluto-nic"
   location            = azurerm_resource_group.personalcloud.location
-  resource_group_name = azurerm_resource_group.app.name
+  resource_group_name = azurerm_resource_group.personalcloud.name
 
   ip_configuration {
     name                          = "pluto"
@@ -62,7 +62,7 @@ resource "azurerm_network_interface" "app" {
 resource "azurerm_public_ip" "app" {
   name                = "pluto-vmpubip"
   location            = azurerm_resource_group.personalcloud.location
-  resource_group_name = azurerm_resource_group.app.name
+  resource_group_name = azurerm_resource_group.personalcloud.name
   allocation_method   = "Static"
   domain_name_label   = "pluto"
 }
@@ -70,7 +70,7 @@ resource "azurerm_public_ip" "app" {
 resource "azurerm_virtual_network" "app" {
   name                = "pluto"
   location            = azurerm_resource_group.personalcloud.location
-  resource_group_name = azurerm_resource_group.app.name
+  resource_group_name = azurerm_resource_group.personalcloud.name
   address_space       = ["10.0.0.0/8"]
 }
 
@@ -104,7 +104,7 @@ resource "azurerm_linux_virtual_machine" "pluto" {
   size                = "Standard_B2pts_v2"
   admin_username      = "admin"
   network_interface_ids = [
-    azurerm_network_interface.example.id,
+    azurerm_network_interface.app.id,
   ]
   capacity_reservation_group_id = azurerm_capacity_reservation_group.reservation-group.id
 
