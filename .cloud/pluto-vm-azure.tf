@@ -2,7 +2,7 @@
 # https://nevaluoto.fi/posts/deploying-linux-vm-on-azure-using-terraform/
 # https://www.cryingcloud.com/blog/2024/7/15/terraform-with-azure-stack-hub-creating-a-vm-with-multiple-data-disks
 
-module "container-server" {
+module "container-server-2" {
   source  = "christippett/container-server/cloudinit"
   version = "~> 1.2"
 
@@ -108,7 +108,7 @@ resource "azurerm_linux_virtual_machine" "pluto" {
   ]
   capacity_reservation_group_id = azurerm_capacity_reservation_group.reservation-group.id
 
-  custom_data = base64encode(module.container-server.cloud_config)
+  custom_data = base64encode(module.container-server-2.cloud_config)
 
   # admin_ssh_key {
   #   username   = "adminuser"
