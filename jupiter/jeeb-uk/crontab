@@ -1,1 +1,1 @@
-0 * * * * ${PERSONAL_CLOUD_DIR}/jupiter/jeeb-uk/push-content.sh; [ "$?" -le 1 ] && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/build-publish-jeebuk
+0 0 * * * cd ${WORKSPACE_DIR}/Interests/Tech/Blog && ./build-and-push.sh; [ "$?" -le 1 ] && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/build-publish-jeebuk
