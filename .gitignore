@@ -4,3 +4,4 @@ home-assistant/secrets.yaml
 yarr/
 .terraform
 .terraform.lock.hcl
+**/node_modules/
