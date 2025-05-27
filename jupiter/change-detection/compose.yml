@@ -1,0 +1,35 @@
+version: "3.4"
+
+services:
+  changedetection:
+    image: ghcr.io/dgtlmoon/changedetection.io
+    container_name: changedetection
+    hostname: changedetection
+    volumes:
+      - ${DOCKER_APP_DATA}/changedetection:/datastore
+    ports:
+      - 9850:5000
+    restart: unless-stopped
+    labels:
+      - flame.type=app
+      - flame.name=Change Detection
+      - flame.url=http://${LOCAL_DOMAIN}:9850
+      - flame.icon=cctv
+    environment:
+      - PLAYWRIGHT_DRIVER_URL=ws://sockpuppetbrowser:3000
+    depends_on:
+      sockpuppetbrowser:
+        condition: service_started
+
+  sockpuppetbrowser:
+    hostname: sockpuppetbrowser
+    image: dgtlmoon/sockpuppetbrowser:latest
+    #cap_add:
+    #    - SYS_ADMIN
+    restart: unless-stopped
+    environment:
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1024
+      - SCREEN_DEPTH=16
+      - MAX_CONCURRENT_CHROME_PROCESSES=10
+
