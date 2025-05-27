@@ -1,0 +1,20 @@
+version: "3.4"
+
+services:
+  audiobookshelf:
+    container_name: audiobookshelf
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    restart: unless-stopped
+    ports:
+      - 13378:80
+    volumes:
+      - ${SECONDARY_STORAGE}/downloads/media/audiobooks:/audiobooks
+      - ${DOCKER_APP_DATA}/audiobookshelf/config:/config
+      - ${DOCKER_APP_DATA}/audiobookshelf/metadata:/metadata
+    environment:
+      - TZ=Europe/London
+    labels:
+      - flame.type=app
+      - flame.name=Audiobookshelf
+      - flame.url=http://${LOCAL_DOMAIN}:13378
+      - flame.icon=headphones
