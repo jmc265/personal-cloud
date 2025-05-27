@@ -1,8 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 const fetch = require('node-fetch');
 const exiftool = require("node-exiftool");
 const exiftoolBin = require("dist-exiftool");
-const {uploadImageToMediaLibrary,createPostWithMedia,addPostToCategory} = require('./wordpress');
 
 const baseUrl = "https://app.famly.co/graphql";
 const PHOTO_BASE_DIR = `${process.env.PRIMARY_STORAGE}/media/home`;
@@ -96,6 +96,13 @@ async function getNotes(accessToken) {
     return body.data.childNotes.result;
 }
 
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
 async function downloadObservation(observation) {
     const {id, status: {createdAt}, remark: {body, date}, images, video} = observation;
     const createdDate = new Date(createdAt);
@@ -104,13 +111,14 @@ async function downloadObservation(observation) {
         console.log("    Observation already downloaded");
         return;
     }
-    const imagePaths = await Promise.all(images.map((image) => downloadImage(image, createdDate)));
-    const videoPath = await downloadVideo(video, createdDate);
-    const imageIds = imagePaths.map((imagePath) => uploadImageToMediaLibrary(imagePath));
-    const videoId = uploadImageToMediaLibrary(videoPath);
+    const targetDirectory = `${PHOTO_BASE_DIR}/${createdDate.getFullYear()}/Nursery/${formatDate(createdDate)}-${id}`;
+    fs.mkdirSync(targetDirectory);
     
-    const postId = createPostWithMedia('Nursery Observation', createdDate, body, imageIds, videoId ? [videoId] : undefined);
-    addPostToCategory(postId, 'Nursery');
+    const imagePaths = await Promise.all(images.map((image) => downloadImage(image, createdDate, targetDirectory)));
+    const videoPath = await downloadVideo(video, createdDate, targetDirectory);
+    
+    writeFile(targetDirectory, body, createdDate, imagePaths, videoPath);
+
     fs.appendFileSync(existingIdsFile, id+"\r\n");
 }
 
@@ -122,25 +130,38 @@ async function downloadNote(note) {
         console.log("    Note already downloaded");
         return;
     }
-    const imagePaths = await Promise.all(images.map((image) => downloadImage(image, createdDate)));
-    const videoPath = await downloadVideo(video, createdDate);
-    const imageIds = imagePaths.map((imagePath) => uploadImageToMediaLibrary(imagePath));
-    const videoId = uploadImageToMediaLibrary(videoPath);
+    const targetDirectory = `${PHOTO_BASE_DIR}/${createdDate.getFullYear()}/Nursery/${formatDate(createdDate)}-${id}`;
+    fs.mkdirSync(targetDirectory);
+
+    const imagePaths = await Promise.all(images.map((image) => downloadImage(image, createdDate, targetDirectory)));
+    const videoPath = await downloadVideo(video, createdDate, targetDirectory);
     
-    const postId = createPostWithMedia('Nursery Note', createdDate, text, imageIds, videoId ? [videoId] : undefined);
-    addPostToCategory(postId, 'Nursery');
+    writeFile(targetDirectory, text, createdDate, imagePaths, videoPath);
+
     fs.appendFileSync(existingIdsFile, id+"\r\n");
 }
 
-async function downloadImage(imageObj, date) {
+function writeFile(targetDirectory, body, createdDate, imagePaths, videoPath) {
+    const imageFileNames = imagePaths.map((p) => path.basename(p));
+    const videoFileName = videoPath ? path.basename(videoPath) : null;
+
+    const markdownContent = `---
+date: ${createdDate.toISOString()}
+---
+${body}
+
+${imageFileNames.map((fileName) => `![](./${fileName})`).join('\n')}
+${videoFileName ? `<video src="${videoFileName}"></video>` : ''}
+`;
+
+    fs.writeFileSync(`${targetDirectory}/observation.md`, markdownContent);
+}
+
+async function downloadImage(imageObj, date, targetDirectory) {
     const {id, height, width, secret:{key, path, prefix, expires}} = imageObj;
-    console.log(`  Found image`, {id});
-    if (existingIds.includes(id)) {
-        console.log("    Image already downloaded");
-        return;
-    }
     const imageUrl = `${prefix}/${key}/${width}x${height}/${path}?expires=${expires}`;
-    const imagePath = `${PHOTO_BASE_DIR}/Unsorted/nursery-${id}.jpg`;
+    const imagePath = `${targetDirectory}/${id}.jpg`;
+    console.log(`  Found image`, {id});
     let ep;
     try {
         const res = await fetch(imageUrl);
@@ -169,7 +190,6 @@ async function downloadImage(imageObj, date) {
         };
         await ep.writeMetadata(imagePath, exifUpdates, ['overwrite_original']);
         console.log("    Image downloaded", {imagePath});
-        fs.appendFileSync(existingIdsFile, id+"\r\n");
         return imagePath;
     } catch (e) {
         console.error('    Error updating exif', e);
@@ -180,17 +200,13 @@ async function downloadImage(imageObj, date) {
     }
 }
 
-async function downloadVideo(videoObj, date) {
+async function downloadVideo(videoObj, date, targetDirectory) {
     if (!videoObj) {
         return;
     }
     const { id, videoUrl } = videoObj;
     console.log(`  Found video`, {id});
-    if (existingIds.includes(id)) {
-        console.log("    Video already downloaded");
-        return;
-    }
-    const videoPath = `${PHOTO_BASE_DIR}/Unsorted/nursery-${id}.mp4`;
+    const videoPath = `${targetDirectory}/${id}.mp4`;
     try {
         const res = await fetch(videoUrl);
         if (!res.ok) {
@@ -207,7 +223,6 @@ async function downloadVideo(videoObj, date) {
             });
         });
         console.log("    Video downloaded", {videoPath});
-        fs.appendFileSync(existingIdsFile, id+"\r\n");
         return videoPath;
     } catch (e) {
         console.error('    Error downloading video', e);
