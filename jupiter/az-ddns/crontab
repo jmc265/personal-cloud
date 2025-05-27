@@ -1,1 +1,1 @@
-15,45 * * * * docker run --rm --env-file $ENV_FILE az-ddns_az-ddns && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/azure-ddns-update
+15,45 * * * * ${PERSONAL_CLOUD_DIR}/jupiter/az-ddns/az-ddns.sh && curl -fsS -m 30 --retry 5 -o /dev/null https://${HEALTHCHECKS_URL}/azure-ddns-update
