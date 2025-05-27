@@ -1,3 +1,7 @@
+# Borg matic
+
+Use borg matic (https://github.com/borgmatic-collective/docker-borgmatic) when it supports borg 2.x (https://borgbackup.readthedocs.io/en/2.0.0b11/changes.html#borg-1-2-x-1-4-x-to-borg-2-0) as it integrates rclone directly
+
 # Borg
 
 Used to create snapshots of a source directory. The snapshots are pruned 
@@ -104,6 +108,26 @@ docker run \
   -v $BORG_REPO_DIR:/borg/repo \
   --name borg-backup \
   pschiffe/borg
+```
+
+## Repair index
+
+```shell
+BORG_REPO_DIR="${PRIMARY_BACKUP_STORAGE}/backups/borg"
+docker run \
+  --rm \
+  -it \
+  -e BORG_REPO=/borg/repo \
+  -e BORG_PASSPHRASE=$BORG_REPO_PASSWORD \
+  -e BORG_PARAMS='check -v /borg/repo' \
+  -v ${DOCKER_APP_DATA}/borg/config:/root \
+  -v $BORG_REPO_DIR:/borg/repo \
+  --name borg-backup \
+  pschiffe/borg
+  /bin/sh
+
+
+borg check --repair
 ```
 
 # Rclone

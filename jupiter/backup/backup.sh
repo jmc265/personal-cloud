@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 # Environment variables
 DATA_SRC_DIR=${PRIMARY_STORAGE}
 DOCKER_SRC_DIR=${DOCKER_APP_DATA}
@@ -11,23 +12,23 @@ do_backup() {
     # Do Borg backup with prune
     # Add `--list --filter=AMEC` to COMPRESSION to see files
     # -e BORG_SKIP_CHECK=true \
-    docker run \
-        --rm \
-        -e BORG_REPO=/borg/repo \
-        -e BORG_PASSPHRASE=$BORG_REPO_PASSWORD \
-        -e BACKUP_DIRS=/borg/src \
-        -e EXCLUDE='*/.deleted;*/lost+found;*/downloads' \
-        -e COMPRESSION="lz4" \
-        -e PRUNE=1 \
-        -e KEEP_DAILY=7 \
-        -e KEEP_WEEKLY=4 \
-        -e KEEP_MONTHLY=6 \
-        -v ${DOCKER_APP_DATA}/borg/config:/root \
-        -v $BORG_DEST_DIR:/borg/repo \
-        -v $DATA_SRC_DIR:/borg/src/primary:ro \
-        -v $DOCKER_SRC_DIR:/borg/src/docker:ro \
-        --name borg-local-create \
-        pschiffe/borg
+   docker run \
+       --rm \
+       -e BORG_REPO=/borg/repo \
+       -e BORG_PASSPHRASE=$BORG_REPO_PASSWORD \
+       -e BACKUP_DIRS=/borg/src \
+       -e EXCLUDE='*/.deleted;*/lost+found;*/downloads' \
+       -e COMPRESSION="lz4" \
+       -e PRUNE=1 \
+       -e KEEP_DAILY=7 \
+       -e KEEP_WEEKLY=4 \
+       -e KEEP_MONTHLY=6 \
+       -v ${DOCKER_APP_DATA}/borg/config:/root \
+       -v $BORG_DEST_DIR:/borg/repo \
+       -v $DATA_SRC_DIR:/borg/src/primary:ro \
+       -v $DOCKER_SRC_DIR:/borg/src/docker:ro \
+       --name borg-local-create \
+       pschiffe/borg
 
     # Rclone repo to cloud
     docker run \
