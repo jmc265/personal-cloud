@@ -1,25 +1,3 @@
-## ---- Azure
-
-variable "azure_subscription_id" {
-  type        = string
-  description = "Azure Subscription Id"
-}
-
-variable "azure_client_id" {
-  type        = string
-  description = "Azure Client Id/appId"
-}
-
-variable "azure_client_secret" {
-  type        = string
-  description = "Azure Client secret"
-}
-
-variable "azure_tenant_id" {
-  type        = string
-  description = "Azure Tenant Id"
-}
-
 ## ---- GCP
 
 variable "gcp_project_id" {
