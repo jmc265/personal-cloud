@@ -17,7 +17,7 @@ resource "azurerm_dns_a_record" "pluto" {
   zone_name           = data.azurerm_dns_zone.root.name
   resource_group_name = data.azurerm_resource_group.jeeb-uk.name
   ttl                 = 300
-  records             = [google_compute_instance.pluto.network_interface.0.access_config.0.nat_ip]
+  records             = [azurerm_public_ip.app.ip_address]
 }
 
 resource "azurerm_dns_cname_record" "pluto_wildcard" {
@@ -26,20 +26,4 @@ resource "azurerm_dns_cname_record" "pluto_wildcard" {
   resource_group_name = data.azurerm_resource_group.jeeb-uk.name
   ttl                 = 300
   record              = azurerm_dns_a_record.pluto.fqdn
-}
-
-resource "azurerm_dns_a_record" "pluto2" {
-  name                = "pluto2"
-  zone_name           = data.azurerm_dns_zone.root.name
-  resource_group_name = data.azurerm_resource_group.jeeb-uk.name
-  ttl                 = 300
-  records             = [azurerm_public_ip.app.ip_address]
-}
-
-resource "azurerm_dns_cname_record" "pluto2_wildcard" {
-  name                = "*.pluto2"
-  zone_name           = data.azurerm_dns_zone.root.name
-  resource_group_name = data.azurerm_resource_group.jeeb-uk.name
-  ttl                 = 300
-  record              = azurerm_dns_a_record.pluto2.fqdn
 }
