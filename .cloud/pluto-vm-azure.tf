@@ -19,7 +19,7 @@ module "container-server" {
   source  = "christippett/container-server/cloudinit"
   version = "~> 1.2"
 
-  domain = "pluto2.${var.root_domain}"
+  domain = "pluto.${var.root_domain}"
   email  = var.email_address
 
   files = [
@@ -34,7 +34,6 @@ module "container-server" {
     ADMIN_EMAIL           = var.email_address
     ADMIN_PASSWORD        = var.admin_password
     INET_DOMAIN           = "pluto.${var.root_domain}"
-    NRIA_LICENSE_KEY      = var.newrelic_license_key
   }
 
   # extra cloud-init config provided to setup + format persistent disk

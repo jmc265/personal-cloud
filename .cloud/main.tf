@@ -26,12 +26,6 @@ provider "azurerm" {
   features {}
 }
 
-provider "newrelic" {
-  account_id = var.newrelic_account_id
-  api_key    = var.newrelic_api_key
-  region     = "EU"
-}
-
 data "azurerm_subscription" "current" {}
 
 resource "azurerm_resource_group" "personalcloud" {
