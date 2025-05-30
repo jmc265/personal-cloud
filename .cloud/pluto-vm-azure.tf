@@ -122,7 +122,7 @@ resource "azurerm_linux_virtual_machine" "pluto" {
   ]
   capacity_reservation_group_id = azurerm_capacity_reservation_group.reservation-group.id
 
-  custom_data = base64encode(module.container-server-2.cloud_config)
+  custom_data = base64encode(module.container-server.cloud_config)
 
   # admin_ssh_key {
   #   username   = "adminuser"
