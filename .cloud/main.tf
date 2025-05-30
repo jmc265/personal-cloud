@@ -13,10 +13,6 @@ terraform {
       source  = "hashicorp/azurerm"
       version = ">= 4.30.0"
     }
-    google = {
-      source = "hashicorp/google"
-      version = ">= 4.21.0"
-    }
     newrelic = {
       source  = "newrelic/newrelic"
       version = "~> 3.14"
@@ -28,12 +24,6 @@ terraform {
 
 provider "azurerm" {
   features {}
-}
-
-provider "google" {
-  project = var.gcp_project_id
-  region  = var.gcp_region
-  zone    = "${var.gcp_region}-b"
 }
 
 provider "newrelic" {
