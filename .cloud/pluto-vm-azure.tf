@@ -2,7 +2,20 @@
 # https://nevaluoto.fi/posts/deploying-linux-vm-on-azure-using-terraform/
 # https://www.cryingcloud.com/blog/2024/7/15/terraform-with-azure-stack-hub-creating-a-vm-with-multiple-data-disks
 
-module "container-server-2" {
+# prepare persistent disk
+
+
+locals {
+  cloudinit_disk = <<EOT
+#cloud-config
+bootcmd:
+  - fsck.ext4 -tvy /dev/sdb || mkfs.ext4 /dev/sdb
+  - mkdir -p /run/app
+  - mount -o defaults -t ext4 /dev/sdb /run/app
+EOT
+}
+
+module "container-server" {
   source  = "christippett/container-server/cloudinit"
   version = "~> 1.2"
 
