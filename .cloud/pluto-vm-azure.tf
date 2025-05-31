@@ -136,7 +136,7 @@ resource "azurerm_linux_virtual_machine" "pluto" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
+    offer     = "server-arm64"
     sku       = "22_04-lts"
     version   = "latest"
   }
