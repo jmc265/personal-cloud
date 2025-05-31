@@ -76,7 +76,7 @@ resource "azurerm_public_ip" "app" {
   location            = azurerm_resource_group.personalcloud.location
   resource_group_name = azurerm_resource_group.personalcloud.name
   allocation_method   = "Static"
-  domain_name_label   = "pluto"
+  domain_name_label   = "pluto-vm"
 }
 
 resource "azurerm_virtual_network" "app" {
