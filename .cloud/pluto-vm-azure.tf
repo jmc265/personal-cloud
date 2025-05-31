@@ -116,6 +116,7 @@ resource "azurerm_linux_virtual_machine" "pluto" {
   size                = "Standard_B2pts_v2"
   admin_username      = "apollo"
   admin_password      = var.admin_password
+  disable_password_authentication = false
   network_interface_ids = [
     azurerm_network_interface.app.id,
   ]
