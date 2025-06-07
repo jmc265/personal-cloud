@@ -127,6 +127,11 @@ resource "azurerm_network_security_group" "nsg" {
   }
 }
 
+resource "azurerm_network_interface_security_group_association" "example" {
+  network_interface_id      = azurerm_network_interface.app.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
 resource "azurerm_linux_virtual_machine" "pluto" {
   name                = "pluto"
   resource_group_name = azurerm_resource_group.personalcloud.name
