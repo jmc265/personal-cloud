@@ -17,7 +17,7 @@ EOT
 
 module "container-server" {
   source  = "christippett/container-server/cloudinit"
-  version = "~> 1.2"
+  version = "1.2.1"
 
   domain = "pluto.${var.root_domain}"
   email  = var.email_address
