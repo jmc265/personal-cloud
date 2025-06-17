@@ -2,47 +2,6 @@
 # https://nevaluoto.fi/posts/deploying-linux-vm-on-azure-using-terraform/
 # https://www.cryingcloud.com/blog/2024/7/15/terraform-with-azure-stack-hub-creating-a-vm-with-multiple-data-disks
 
-# prepare persistent disk
-
-
-locals {
-  cloudinit_disk = <<EOT
-#cloud-config
-bootcmd:
-  - fsck.ext4 -tvy /dev/sdb || mkfs.ext4 /dev/sdb
-  - mkdir -p /run/app
-  - mount -o defaults -t ext4 /dev/sdb /run/app
-EOT
-}
-
-module "container-server" {
-  source  = "christippett/container-server/cloudinit"
-  version = "1.2.1"
-
-  domain = "pluto.${var.root_domain}"
-  email  = var.email_address
-
-  files = [
-    {
-      filename = "docker-compose.yaml"
-      content  = filebase64("${path.module}/../pluto/docker-compose.yaml")
-    }
-  ]
-  env = {
-    TRAEFIK_API_DASHBOARD = false
-    DOCKER_APP_DATA       = "/run/app"
-    ADMIN_EMAIL           = var.email_address
-    ADMIN_PASSWORD        = var.admin_password
-    INET_DOMAIN           = "pluto.${var.root_domain}"
-  }
-
-  # extra cloud-init config provided to setup + format persistent disk
-  cloudinit_part = [{
-    content_type = "text/cloud-config"
-    content      = local.cloudinit_disk
-  }]
-}
-
 resource "azurerm_capacity_reservation_group" "reservation-group" {
   name                = "capacity-reservation-group"
   resource_group_name = azurerm_resource_group.personalcloud.name
@@ -168,8 +127,6 @@ resource "azurerm_linux_virtual_machine" "pluto" {
     azurerm_network_interface.app.id,
   ]
   capacity_reservation_group_id = azurerm_capacity_reservation_group.reservation-group.id
-
-  custom_data = base64encode(module.container-server.cloud_config)
 
   # admin_ssh_key {
   #   username   = "adminuser"
