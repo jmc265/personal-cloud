@@ -26,6 +26,7 @@ resource "azurerm_network_interface" "app" {
     name                          = "pluto"
     subnet_id                     = azurerm_subnet.app.id
     private_ip_address_allocation = "Dynamic"
+    private_ip_address_version    = "IPv6"
     public_ip_address_id          = azurerm_public_ip.app.id
   }
 }
