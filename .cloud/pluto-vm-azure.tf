@@ -23,11 +23,18 @@ resource "azurerm_network_interface" "app" {
   resource_group_name = azurerm_resource_group.personalcloud.name
 
   ip_configuration {
-    name                          = "pluto"
+    name                          = "pluto-ipv6"
     subnet_id                     = azurerm_subnet.app.id
     private_ip_address_allocation = "Dynamic"
     private_ip_address_version    = "IPv6"
     public_ip_address_id          = azurerm_public_ip.app.id
+  }
+
+  ip_configuration {
+    name                          = "pluto-ipv4"
+    subnet_id                     = azurerm_subnet.app.id
+    private_ip_address_allocation = "Dynamic"
+    private_ip_address_version    = "IPv4"
   }
 }
 
@@ -44,14 +51,14 @@ resource "azurerm_virtual_network" "app" {
   name                = "pluto"
   location            = azurerm_resource_group.personalcloud.location
   resource_group_name = azurerm_resource_group.personalcloud.name
-  address_space       = ["10.0.0.0/16"]
+  address_space       = ["10.0.0.0/16","fd00:db8:deca::/48"]
 }
 
 resource "azurerm_subnet" "app" {
   name                 = "pluto"
   resource_group_name  = azurerm_resource_group.personalcloud.name
   virtual_network_name = azurerm_virtual_network.app.name
-  address_prefixes = ["10.0.2.0/24"]
+  address_prefixes = ["10.0.2.0/24","fd00:db8:deca:daed::/64"]
 }
 
 resource "azurerm_managed_disk" "disk" {
