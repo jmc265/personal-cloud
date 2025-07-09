@@ -36,6 +36,7 @@ resource "azurerm_public_ip" "app" {
   resource_group_name = azurerm_resource_group.personalcloud.name
   allocation_method   = "Static"
   domain_name_label   = "pluto-vm"
+  ip_version          = "IPv6"
 }
 
 resource "azurerm_virtual_network" "app" {

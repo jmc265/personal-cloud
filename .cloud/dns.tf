@@ -12,7 +12,7 @@ resource "azurerm_dns_a_record" "home" {
   records             = ["1.2.3.4"] # Updated by script
 }
 
-resource "azurerm_dns_a_record" "pluto" {
+resource "azurerm_dns_aaaa_record" "pluto" {
   name                = "pluto"
   zone_name           = data.azurerm_dns_zone.root.name
   resource_group_name = data.azurerm_resource_group.jeeb-uk.name
