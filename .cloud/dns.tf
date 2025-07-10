@@ -33,5 +33,5 @@ resource "azurerm_dns_cname_record" "pluto_wildcard" {
   zone_name           = data.azurerm_dns_zone.root.name
   resource_group_name = data.azurerm_resource_group.jeeb-uk.name
   ttl                 = 300
-  record              = azurerm_dns_aaaa_record.pluto.fqdn
+  record              = azurerm_dns_cname_record.pluto.fqdn
 }
