@@ -37,7 +37,7 @@ resource "azurerm_public_ip" "lb" {
   location            = azurerm_resource_group.personalcloud.location
   resource_group_name = azurerm_resource_group.personalcloud.name
   allocation_method   = "Dynamic"
-  # sku                 = "Standard"
+  sku                 = "Basic"
 }
 
 # resource "azurerm_lb" "pluto" {
