@@ -25,7 +25,8 @@ resource "azurerm_dns_cname_record" "pluto" {
   zone_name           = data.azurerm_dns_zone.root.name
   resource_group_name = data.azurerm_resource_group.jeeb-uk.name
   ttl                 = 300
-  record              = azurerm_public_ip.lb.fqdn
+  # record              = azurerm_public_ip.lb.fqdn
+  target_resource_id = azurerm_public_ip.lb.id
 }
 
 resource "azurerm_dns_cname_record" "pluto_wildcard" {
