@@ -1,6 +1,7 @@
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine
 # https://nevaluoto.fi/posts/deploying-linux-vm-on-azure-using-terraform/
 # https://www.cryingcloud.com/blog/2024/7/15/terraform-with-azure-stack-hub-creating-a-vm-with-multiple-data-disks
+# https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-terraform?tabs=azure-cli
 
 resource "azurerm_capacity_reservation_group" "reservation-group" {
   name                = "capacity-reservation-group"
@@ -17,49 +18,57 @@ resource "azurerm_capacity_reservation" "vm-reservation" {
   }
 }
 
-resource "azurerm_network_interface" "app" {
-  name                = "pluto-nic"
-  location            = azurerm_resource_group.personalcloud.location
-  resource_group_name = azurerm_resource_group.personalcloud.name
-
-  ip_configuration {
-    name                          = "pluto-ipv6"
-    subnet_id                     = azurerm_subnet.app.id
-    private_ip_address_allocation = "Dynamic"
-    private_ip_address_version    = "IPv6"
-    public_ip_address_id          = azurerm_public_ip.app.id
-  }
-
-  ip_configuration {
-    name                          = "pluto-ipv4"
-    subnet_id                     = azurerm_subnet.app.id
-    private_ip_address_allocation = "Dynamic"
-    private_ip_address_version    = "IPv4"
-    primary = true
-  }
-}
-
-resource "azurerm_public_ip" "app" {
-  name                = "pluto-vmpubip"
-  location            = azurerm_resource_group.personalcloud.location
-  resource_group_name = azurerm_resource_group.personalcloud.name
-  allocation_method   = "Static"
-  domain_name_label   = "pluto-vm"
-  ip_version          = "IPv6"
-}
-
 resource "azurerm_virtual_network" "app" {
   name                = "pluto"
   location            = azurerm_resource_group.personalcloud.location
   resource_group_name = azurerm_resource_group.personalcloud.name
-  address_space       = ["10.0.0.0/16","fd00:db8:deca::/48"]
+  address_space       = ["10.0.0.0/16"]
 }
 
 resource "azurerm_subnet" "app" {
   name                 = "pluto"
   resource_group_name  = azurerm_resource_group.personalcloud.name
   virtual_network_name = azurerm_virtual_network.app.name
-  address_prefixes = ["10.0.2.0/24","fd00:db8:deca:daed::/64"]
+  address_prefixes     = ["10.0.2.0/24"]
+}
+
+resource "azurerm_public_ip" "lb" {
+  name                = "pluto-lb-pip"
+  location            = azurerm_resource_group.personalcloud.location
+  resource_group_name = azurerm_resource_group.personalcloud.name
+  allocation_method   = "Dynamic"
+  # sku                 = "Standard"
+}
+
+# resource "azurerm_lb" "pluto" {
+#   name                = "pluto-lb"
+#   location            = azurerm_resource_group.personalcloud.location
+#   resource_group_name = azurerm_resource_group.personalcloud.name
+#   sku                 = "Standard"
+
+#   frontend_ip_configuration {
+#     name                 = "PublicIPAddress"
+#     public_ip_address_id = azurerm_public_ip.lb.id
+#   }
+# }
+
+# resource "azurerm_lb_backend_address_pool" "pluto" {
+#   name                = "pluto-bepool"
+#   loadbalancer_id     = azurerm_lb.pluto.id
+#   resource_group_name = azurerm_resource_group.personalcloud.name
+# }
+
+resource "azurerm_network_interface" "app" {
+  name                = "pluto-nic"
+  location            = azurerm_resource_group.personalcloud.location
+  resource_group_name = azurerm_resource_group.personalcloud.name
+
+  ip_configuration {
+    name                          = "pluto-ipv4"
+    subnet_id                     = azurerm_subnet.app.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.lb.id
+  }
 }
 
 resource "azurerm_managed_disk" "disk" {
@@ -137,11 +146,6 @@ resource "azurerm_linux_virtual_machine" "pluto" {
     azurerm_network_interface.app.id,
   ]
   capacity_reservation_group_id = azurerm_capacity_reservation_group.reservation-group.id
-
-  # admin_ssh_key {
-  #   username   = "adminuser"
-  #   public_key = file("~/.ssh/id_rsa.pub")
-  # }
 
   os_disk {
     caching              = "ReadWrite"
